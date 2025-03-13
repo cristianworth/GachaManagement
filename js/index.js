@@ -40,7 +40,6 @@ function initAddGameForm() {
         let staminaPerMinute = document.getElementById("staminaPerMinute").value;
 
         let newGame = new Game(
-                            id = null, 
                             description = description, 
                             abbreviation = abbreviation, 
                             img = 'img/default-icon.png',

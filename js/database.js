@@ -38,20 +38,10 @@ async function addGameIfNotExists(newGame) {
 
 async function addGame(game) {
     try {
-        game.id = await getNextGameId();
         await db.games.add(game);
         console.log("New Game added:", game);
     } catch (error) {
         console.error("Failed to add game:", error);
-    }
-}
-
-async function getNextGameId() {
-    try {
-        var maxId = await db.games.orderBy('id').last();
-        return ++maxId.id;
-    } catch (error) {
-        console.error("Failed to get max game id:", error);
     }
 }
 
@@ -124,20 +114,10 @@ async function fetchGameById(id) {
 
 async function addTask(task) {
     try {
-        task.id = await getNextTaskId();
         await db.tasks.add(task);
         console.log("New Task added:", task);
     } catch (error) {
         console.error("Failed to add task:", error);
-    }
-}
-
-async function getNextTaskId() {
-    try {
-        var maxId = await db.tasks.orderBy('id').last();
-        return ++maxId.id;
-    } catch (error) {
-        console.error("Failed to get max task id:", error);
     }
 }
 
