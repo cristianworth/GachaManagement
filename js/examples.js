@@ -1,0 +1,14 @@
+"use strict";
+let stringType = ["100"];
+let numberType = [200];
+let unionType = ["100", 200, 300, "400"];
+unionType.unshift(55);
+unionType.push(45);
+console.log(unionType);
+let unionTypeArray = ["100", 200, 300, "400"];
+unionTypeArray.shift();
+unionTypeArray.pop();
+console.log(unionTypeArray);
+let unionTypeReadOnly = [55, "45"];
+unionTypeReadOnly = [];
+console.log(unionTypeReadOnly);

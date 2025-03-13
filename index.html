@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Game precisa ser referenciado primeiro, pq ele é usado pelo index. A ORDEM IMPORTA AQUI -->
+    <script src="js/Game.js"></script> 
+    <script src="js/Tasks.js"></script> 
+    <script src="js/database.js"></script> 
+    <script src="js/utils/dateUtils.js"></script> 
+    <script src="js/index.js"></script> 
+    <title>Resin Management</title>
+</head>
+<body>
+    <section>
+        <h1 href="https://github.com/cristianworth/practice-makes-perfect/tree/main/resin-management" target="_blank" class="main-title">
+            <a href="https://github.com/cristianworth/practice-makes-perfect/tree/main/resin-management" target="_blank">Resin Management</a>
+        </h1>
+        
+        <form id="game-form">
+            <label for="description">Name of the game:</label>
+            <input id="description" type="text" required/>
+            
+            <label for="abbreviation">Abbreviation:</label>
+            <input id="abbreviation" type="text" required/>
+            
+            <label for="capStamina">Cap Stamina:</label>
+            <input id="capStamina" type="text" required/>
+            
+            <label for="staminaPerMinute">Stamina p/ Minute:</label>
+            <input id="staminaPerMinute" type="text" required/>
+            
+            <button type="submit">Add Game</button>
+        </form>
+        <table id="gameList">
+            <thead>
+                <tr>
+                    <th>Icon</th>
+                    <th>Game</th>
+                    <th>To-do</th>
+                    <th>Stamina</th>
+                    <th>Max Stamina At</th>
+                    <th hidden>Date</th>
+                </tr>
+            </thead>
+            <tbody id="gameListBody">
+                <!-- Dados vão ser preenchidos automaticamente com os dados populados no game.js -->
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h1 class="main-title">Gacha Schedule</h1>
+        <table id="gameSchedule">
+            <thead>
+                <tr>
+                    <th hidden>ID</th>
+                    <th>Done?</th>
+                    <th>Game</th>
+                    <th>Task</th>
+                    <th>Refresh Type</th>
+                    <th>Ending Date</th>
+                </tr>
+            </thead>
+            <tbody id="gameScheduleBody">
+                <tr>
+                    <td hidden>1</td>
+                    <td><input type="checkbox" id="task1" value="checkboxTask1"></td>
+                    <td>ZZZ</td>
+                    <td>Shiyu Defense</td>
+                    <td>Monthly</td>
+                    <td>31/07/2024</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h1 class="main-title">Event time calculator</h1>
+        <form id="form-event-time">
+            <label for="eventDay">Event Days:</label>
+            <input id="eventDay" name="eventDay"/>
+            
+            <label for="eventHour">Event Hours:</label>
+            <input id="eventHour" name="eventHour"/>
+            
+            <button type="submit">Go!</button>
+
+            <br/>
+            <p>The event will be over on day: <span id="eventOver" class="red-text">not defined</span></p>
+        </form>
+    </section>
+</body>
+</html>
