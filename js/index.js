@@ -30,8 +30,8 @@ function calculateMaxStaminaDate(game) {
 }
 
 function initAddGameForm() {
-    let formCreate = document.getElementById("game-form");
-    formCreate.addEventListener("submit", async function (e) {
+    let gameForm = document.getElementById("game-form");
+    gameForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         
         let description = document.getElementById("description").value;
@@ -40,20 +40,42 @@ function initAddGameForm() {
         let staminaPerMinute = document.getElementById("staminaPerMinute").value;
 
         let newGame = new Game(
-                            description = description, 
-                            abbreviation = abbreviation, 
-                            img = 'img/default-icon.png',
-                            capStamina = capStamina,
-                            staminaPerMinute = staminaPerMinute,
-                            currentStamina = 0,
-                            maxStaminaAt = '',
-                            dateMaxStamina = new Date(),
-                            pendingTasks = ''
-                        );
+            description, 
+            abbreviation, 
+            'img/default-icon.png',
+            capStamina,
+            staminaPerMinute
+        );
 
         await addGame(newGame);
         displayAllGames();
     });
+}
+
+function initAddTaskForm() {
+    let taskForm = document.getElementById("task-form");
+    taskForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        
+        let selectGame = document.getElementById("gameId");
+        let gameId = selectGame.value;
+        let gameDescription = selectGame.options[selectGame.selectedIndex].text;
+
+        let description = document.getElementById("description").value;
+        let expirationDate = getExpirationDate();
+        let refreshType = parseInt(document.getElementById("refreshType").value);
+
+        let newTask = new Task(
+            description,
+            expirationDate,
+            refreshType,
+            gameId,
+            gameDescription,
+        );
+
+        await addTask(newTask);
+        displayAllTasks();
+    })
 }
 
 function initFormEventTimeMethod() {
@@ -71,28 +93,41 @@ function initFormEventTimeMethod() {
     });
 }
 
+function getExpirationDate() {
+    let expirationDay = document.getElementById("expirationDay").value;
+    let expirationHour = document.getElementById("expirationHour").value;
+
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + expirationDay);
+    currentDate.setHours(currentDate.getHours() + expirationHour);
+
+    return currentDate;
+}
+
 async function displayAllGames() {
     var games = await fetchAllGames();
+    let gameListBody = document.getElementById("gameListBody");
     gameListBody.innerHTML = ''; // clear data
 
     games.forEach(game => {
-        // Isso aqui não deveria ser instanciado antes de usar o innetHTML WTF ?? 
-        let gameListBody = document.getElementById("gameListBody");
-        gameListBody.innerHTML += `
+        let row = `
             <tr>
+                <td id="gameId${game.id}" hidden>${game.id}</td>
                 <td><img src=${game.img} alt="${game.description} Icon" class="icon"></td>
                 <td>${game.description}</td>
                 <td>
                     <textarea id="pendingTasks${game.id}" name="pendingTasks" spellcheck="false">${game.pendingTasks || ''}</textarea>
                 </td>
                 <td>
-                    <input class="input-centered spacing-left" id="newStamina${game.id}" name="newStamina" type="number" oninput="validateStaminaInput(this)" value="${game.currentStamina | ''}" />
+                    <input class="input-centered spacing-left" id="newStamina${game.id}" name="newStamina" type="number" oninput="validateNumberInput(this)" value="${game.currentStamina | ''}" />
                     <button class="spacing-left" id="${game.id}" onclick="updateGameStamina(${game.id})">Update</button>
                 </td>
                 <td><span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${game.maxStaminaAt}<\span></td>
                 <td hidden>${game.dateMaxStamina}</td>
             </tr>
         `;
+
+        gameListBody.innerHTML += row;
     });
 }
 
@@ -103,29 +138,67 @@ async function displayAllTasks() {
 
     tasks.forEach(task => {
         let row = `
-                <tr>
-                    <td hidden>${task.id}</td>
-                    <td><input type="checkbox" id="task1" value="${task.isDone == "S" ? true : false}"></td>
-                    <td>${task.gameDescription}</td>
-                    <td>${task.description}</td>
-                    <td>${task.refreshType}</td>
-                    <td>${task.expirationDate}</td>
-                    <td><button class="spacing-left" id="${task.id}" onclick="updateTaskData(${task.id})">Edit</button></td>
-                </tr>
+            <tr>
+                <td id="taskId${task.id}" hidden>${task.id}</td>
+                <td><input type="checkbox" id="task1" value="${task.isDone == "S" ? true : false}"></td>
+                <td>${task.gameDescription}</td>
+                <td>${task.description}</td>
+                <td>${task.refreshType}</td>
+                <td>${task.expirationDate}</td>
+                <td><button class="spacing-left" id="${task.id}" onclick="updateTaskData(${task.id})">Edit</button></td>
+            </tr>
         `;
 
         gameScheduleBody.innerHTML += row;
     });
 }
 
-function validateStaminaInput(input) {
+function validateNumberInput(input) {
     input.value = input.value.replace(/[^0-9]/g, '');  // Removes non-numeric characters
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+async function populateGameDropDown() {
+    let games = await fetchAllGames();
+    const selectGame = document.getElementById("gameId");
+
+    games.forEach(game => {
+        let option = document.createElement("option");
+        option.value = game.id;
+        option.textContent = game.description;
+        selectGame.appendChild(option);
+    });
+}
+
+function populateRefreshTypeDropDown() {
+    const selectRefreshType = document.getElementById("refreshType");
+
+    RefreshTypeEnum.values.forEach(rType => {
+        let option = document.createElement("option");
+        option.value = rType.id;
+        option.textContent = rType.value;
+        selectRefreshType.appendChild(option);
+    })
+}
+
+function iniciaEventos() {
     initAddGameForm();
+    initAddTaskForm();
     initFormEventTimeMethod();
-    populateInitialData();
+}
+
+function populaElementosDaTela() {
+    populateGameDropDown();
+    populateRefreshTypeDropDown();
+}
+
+function carregaDadosDoBanco() {
+    populateInitialData(); // database.js method
     displayAllGames();
     displayAllTasks();
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    iniciaEventos();
+    populaElementosDaTela();
+    carregaDadosDoBanco();
 });
