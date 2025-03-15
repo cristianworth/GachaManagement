@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <!-- Game precisa ser referenciado primeiro, pq ele é usado pelo index. A ORDEM IMPORTA AQUI -->
     <script src="js/Game.js"></script> 
-    <script src="js/Tasks.js"></script> 
+    <script src="js/Task.js"></script> 
     <script src="js/database.js"></script> 
     <script src="js/utils/dateUtils.js"></script> 
     <script src="js/index.js"></script> 
@@ -54,6 +54,21 @@
     </section>
     <section>
         <h1 class="main-title">Gacha Schedule</h1>
+        <form id="task-form">
+            <label for="gameId">Game:</label>
+            <select id="gameId"/>
+            
+            <label for="description">Task:</label>
+            <input id="description" type="text" required/>
+
+            <label for="expirationDate">Expiration:</label>
+            <input id="expirationDate" type="datetime-local" required/>
+
+            <label for="refreshType">Refresh Type:</label>
+            <select id="refreshType"/>
+            
+            <button>Add Task</button>
+        </form>
         <table id="gameSchedule">
             <thead>
                 <tr>

@@ -1,4 +1,4 @@
-class Tasks {
+class Task {
     constructor(id, description, expirationDate, isDone, refreshType, gameId, gameDescription) {
         this.id = id;
         this.description = description;
@@ -12,8 +12,8 @@ class Tasks {
 
 var allTasks = [];
 
-allTasks.push(new Tasks(id = 1, description = 'Spyral Abyss', expirationDate = '15/03/2025', isDone = 'S', refreshType = 'BiMonthly', gameId = 1, gameDescription = "Genshin Impact"));
-allTasks.push(new Tasks(id = 2, description = 'Imaginarium Theater', expirationDate = '31/03/2025', isDone = 'N', refreshType = 'BiMonthly', gameId = 1, gameDescription = "Genshin Impact"));
+allTasks.push(new Task(id = 1, description = 'Spyral Abyss', expirationDate = '15/03/2025', isDone = 'S', refreshType = 'BiMonthly', gameId = 1, gameDescription = "Genshin Impact"));
+allTasks.push(new Task(id = 2, description = 'Imaginarium Theater', expirationDate = '31/03/2025', isDone = 'N', refreshType = 'BiMonthly', gameId = 1, gameDescription = "Genshin Impact"));
 
 async function addTaskIfNotExists(newTask) {
     // Method used to populate the initial set o data predefined on the Tasks.js file
