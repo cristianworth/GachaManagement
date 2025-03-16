@@ -186,19 +186,18 @@ function iniciaEventos() {
     initFormEventTimeMethod();
 }
 
+function carregaDadosDoBanco() {
+    displayAllGames();
+    displayAllTasks();
+}
+
 function populaElementosDaTela() {
     populateGameDropDown();
     populateRefreshTypeDropDown();
 }
 
-function carregaDadosDoBanco() {
-    populateInitialData(); // database.js method
-    displayAllGames();
-    displayAllTasks();
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     iniciaEventos();
-    populaElementosDaTela();
     carregaDadosDoBanco();
+    populaElementosDaTela();
 });

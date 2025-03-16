@@ -8,6 +8,13 @@ class RefreshTypeEnum {
     ];
 
     static BuscaEnumPorNome(nome) {
-        return this.values.find(x => x.value == nome) ?? null;
+        let enumEncontrado = this.values.find(x => x.value == nome);
+
+        if (enumEncontrado)
+        {
+            return enumEncontrado.id 
+        }
+
+        return null;
     }
 }

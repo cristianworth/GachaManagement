@@ -29,19 +29,6 @@ allGames.push(new Game(description = 'Snowbreak', abbreviation = 'SK', img = 'im
 // allGames.push(new Game(description = 'Punishing Gray Raven', abbreviation = 'PGR', img = 'img/pgr-icon.png', capStamina = 240, staminaPerMinute = 6));
 // allGames.push(new Game(description = 'Nikke', abbreviation = 'NKK', img = 'img/nikke-icon.png', capStamina = 1, staminaPerMinute = 1440));
 
-async function addGameIfNotExists(newGame) {
-    // Method used to populate the initial set o data predefined on the Game.js file
-    try {
-        const gameFound = await fetchGameById(newGame.id);
-
-        if (!gameFound) {
-            await addGame(newGame);
-        }
-    } catch (error) {
-        console.error("Failed to add game:", error);
-    }
-}
-
 async function addGame(game) {
     try {
         await db.games.add(game);
@@ -104,5 +91,30 @@ async function fetchGameById(id) {
     } catch (error) {
         console.error("Erro ao buscar o jogo pelo ID:", error);
         return null;
+    }
+}
+
+async function populateInitialGames() {
+    try {
+        const hasGames = await hasAnyGame();
+
+        if (!hasGames) {
+            console.log("No games found. Populating initial data...");
+            for (const game of allGames) {
+                await addGame(game);
+            }
+        }
+    } catch (error) {
+        console.error("Error populating initial games data:", error);
+    }
+}
+
+async function hasAnyGame() {
+    try {
+        const game = await db.games.limit(1).toArray();
+        return game.length > 0;
+    } catch (error) {
+        console.error("Error checking if any game exists:", error);
+        return false;
     }
 }

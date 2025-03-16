@@ -21,19 +21,6 @@ var allTasks = [];
 allTasks.push(new Task('Spyral Abyss', new Date(2025, 2, 15), RefreshTypeEnum.BuscaEnumPorNome('BiMonthly'), 1, "Genshin Impact"));
 allTasks.push(new Task('Imaginarium Theater', new Date(2025, 2, 31), RefreshTypeEnum.BuscaEnumPorNome('BiMonthly'), 1, "Genshin Impact"));
 
-async function addTaskIfNotExists(newTask) {
-    // Method used to populate the initial set o data predefined on the Tasks.js file
-    try {
-        const taskFound = await fetchTaskById(newTask.id);
-
-        if (!taskFound) {
-            await addTask(newTask);
-        }
-    } catch (error) {
-        console.error("Failed to add Task:", error);
-    }
-}
-
 async function addTask(task) {
     try {
         await db.tasks.add(task);
@@ -112,5 +99,30 @@ async function completeTask(taskId) {
         return task;
     } catch (error) {
         console.error("Failed to update game:", error);
+    }
+}
+
+async function populateInitialTasks() {
+    try {
+        const hasTasks = await hasAnyTask();
+
+        if (!hasTasks) {
+            console.log("No tasks found. Populating initial data...");
+            for (const task of allTasks) {
+                await addTask(task);
+            }
+        }
+    } catch (error) {
+        console.error("Error populating initial tasks data:", error);
+    }
+}
+
+async function hasAnyTask() {
+    try {
+        const task = await db.tasks.limit(1).toArray();
+        return task.length > 0;
+    } catch (error) {
+        console.error("Error checking if any task exists:", error);
+        return false;
     }
 }

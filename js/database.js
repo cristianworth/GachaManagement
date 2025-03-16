@@ -10,15 +10,19 @@ db.open().then(populateInitialData).catch((error) => {
 });
 
 async function populateInitialData() {
-    try {
-        for (const game of allGames) {
-            await addGameIfNotExists(game);
-        }
+    console.log('Do something afeter open database.');
+    await populateInitialGames();
+    await populateInitialTasks();
+}
 
-        for (const task of allTasks) {
-            await addTaskIfNotExists(task);
-        }
+async function resetDatabase() {
+    try {
+        // Apaga todos os registros das tabelas
+        await db.games.clear(); // Limpa a tabela de jogos
+        await db.tasks.clear(); // Limpa a tabela de tarefas
+
+        console.log("Banco de dados resetado com sucesso!");
     } catch (error) {
-        console.error("Error populating initial data:", error);
+        console.error("Erro ao resetar o banco de dados:", error);
     }
 }
