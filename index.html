@@ -1,3 +1,4 @@
+<!-- index.html file -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,22 +8,26 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/styles.css">
     <!-- Game precisa ser referenciado primeiro, pq ele é usado pelo index. A ORDEM IMPORTA AQUI -->
-    <script src="js/Game.js"></script> 
-    <script src="js/Tasks.js"></script> 
-    <script src="js/database.js"></script> 
+    <script src="js/enums/RefreshTypeEnum.js"></script> 
     <script src="js/utils/dateUtils.js"></script> 
+    <script src="js/utils/colorUtils.js"></script> 
+    <script src="js/Game.js"></script> 
+    <script src="js/Task.js"></script> 
+    <script src="js/database.js"></script> 
     <script src="js/index.js"></script> 
-    <title>Resin Management</title>
+    <title>Gacha Management</title>
 </head>
 <body>
     <section>
-        <h1 href="https://github.com/cristianworth/practice-makes-perfect/tree/main/resin-management" target="_blank" class="main-title">
-            <a href="https://github.com/cristianworth/practice-makes-perfect/tree/main/resin-management" target="_blank">Resin Management</a>
+        <h1 class="main-title">
+            <a href="https://cristianworth.github.io/GachaManagement/" target="_blank">Gacha Management</a>
+            <br>
+            <a href="https://github.com/cristianworth/GachaManagement/tree/dev" target="_blank">Dev Repo</a>
         </h1>
         
         <form id="game-form">
-            <label for="description">Name of the game:</label>
-            <input id="description" type="text" required/>
+            <label for="gameDescription">Name of the game:</label>
+            <input id="gameDescription" type="text" required/>
             
             <label for="abbreviation">Abbreviation:</label>
             <input id="abbreviation" type="text" required/>
@@ -53,6 +58,24 @@
     </section>
     <section>
         <h1 class="main-title">Gacha Schedule</h1>
+        <form id="task-form">
+            <label for="gameId">Game:</label>
+            <select id="gameId"></select>
+            
+            <label for="taskDescription">Task:</label>
+            <input id="taskDescription" type="text" required/>
+
+            <label for="expirationDay">Expiration Day:</label>
+            <input id="expirationDay" type="number" oninput="validateNumberInput(this)" required/>
+        
+            <label for="expirationHour">Expiration Hour:</label>
+            <input id="expirationHour" type="number" oninput="validateNumberInput(this)" required/>
+
+            <label for="refreshType">Refresh Type:</label>
+            <select id="refreshType"></select>
+            
+            <button>Add Task</button>
+        </form>
         <table id="gameSchedule">
             <thead>
                 <tr>
@@ -75,21 +98,6 @@
                 </tr>
             </tbody>
         </table>
-    </section>
-    <section>
-        <h1 class="main-title">Event time calculator</h1>
-        <form id="form-event-time">
-            <label for="eventDay">Event Days:</label>
-            <input id="eventDay" name="eventDay"/>
-            
-            <label for="eventHour">Event Hours:</label>
-            <input id="eventHour" name="eventHour"/>
-            
-            <button type="submit">Go!</button>
-
-            <br/>
-            <p>The event will be over on day: <span id="eventOver" class="red-text">not defined</span></p>
-        </form>
     </section>
 </body>
 </html>
