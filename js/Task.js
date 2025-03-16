@@ -18,8 +18,11 @@ class Task {
 
 var allTasks = [];
 
-allTasks.push(new Task('Spyral Abyss', new Date(2025, 2, 15), RefreshTypeEnum.BuscaEnumPorNome('BiMonthly'), 1, "Genshin Impact"));
-allTasks.push(new Task('Imaginarium Theater', new Date(2025, 2, 31), RefreshTypeEnum.BuscaEnumPorNome('BiMonthly'), 1, "Genshin Impact"));
+allTasks.push(new Task('Spyral Abyss', new Date(2025, 2, 15), RefreshTypeEnum.BuscaIdPorNome('BiMonthly'), 0, "Genshin Impact"));
+allTasks.push(new Task('Imaginarium Theater', new Date(2025, 2, 31), RefreshTypeEnum.BuscaIdPorNome('BiMonthly'), 0, "Genshin Impact"));
+allTasks.push(new Task('Memory of Chaos', new Date(2025, 3, 7), RefreshTypeEnum.BuscaIdPorNome('Monthly'), 1, "Honkai Star Rail"));
+allTasks.push(new Task('Tower of Adversity', new Date(2025, 3, 7), RefreshTypeEnum.BuscaIdPorNome('Monthly'), 2, "Wuthering Waves"));
+allTasks.push(new Task('Shiyu Defense', new Date(2025, 3, 9), RefreshTypeEnum.BuscaIdPorNome('BiMonthly'), 3, "Zenless Zone Zero"));
 
 async function addTask(task) {
     try {
@@ -93,9 +96,9 @@ async function fetchTasksByGame(gameId) {
     }
 }
 
-async function completeTask(taskId) {
+async function completeTask(taskId, isDone) {
     try {
-        var task = await db.tasks.update(taskId, { status: "completed" });
+        var task = await db.tasks.update(taskId, { isDone: isDone });
         return task;
     } catch (error) {
         console.error("Failed to update game:", error);

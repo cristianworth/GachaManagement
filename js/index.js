@@ -78,21 +78,6 @@ function initAddTaskForm() {
     })
 }
 
-function initFormEventTimeMethod() {
-    let formEventTime = document.getElementById("form-event-time");
-    formEventTime.addEventListener("submit", (e) => {
-        e.preventDefault();
-        
-        let eventDay = parseInt(document.getElementById("eventDay").value) | 0;
-        let eventHour = parseInt(document.getElementById("eventHour").value) | 0;
-        
-        let currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + eventDay);
-        currentDate.setHours(currentDate.getHours() + eventHour);
-        document.getElementById("eventOver").textContent = formatDate(currentDate);
-    });
-}
-
 function getExpirationDate() {
     let expirationDay = document.getElementById("expirationDay").value;
     let expirationHour = document.getElementById("expirationHour").value;
@@ -140,17 +125,22 @@ async function displayAllTasks() {
         let row = `
             <tr>
                 <td id="taskId${task.id}" hidden>${task.id}</td>
-                <td><input type="checkbox" id="task1" value="${task.isDone == "S" ? true : false}"></td>
+                <td><input type="checkbox" id="task1" value="${task.isDone}" ${task.isDone ? "checked" : ""} onclick="updateStatus(${task.id}, this.checked)"></td>
                 <td>${task.gameDescription}</td>
                 <td>${task.description}</td>
-                <td>${task.refreshType}</td>
-                <td>${task.expirationDate}</td>
+                <td>${RefreshTypeEnum.BuscaNomePorId(task.refreshType)}</td>
+                <td>${formatDate(task.expirationDate)}</td>
                 <td><button class="spacing-left" id="${task.id}" onclick="updateTaskData(${task.id})">Edit</button></td>
             </tr>
         `;
 
         gameScheduleBody.innerHTML += row;
     });
+}
+
+async function updateStatus(id, value) {
+    await completeTask(id, value);
+    await displayAllTasks();
 }
 
 function validateNumberInput(input) {
@@ -183,7 +173,6 @@ function populateRefreshTypeDropDown() {
 function iniciaEventos() {
     initAddGameForm();
     initAddTaskForm();
-    initFormEventTimeMethod();
 }
 
 function carregaDadosDoBanco() {

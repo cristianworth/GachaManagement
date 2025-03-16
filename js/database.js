@@ -15,7 +15,7 @@ async function populateInitialData() {
     await populateInitialTasks();
 }
 
-async function resetDatabase() {
+async function clearDatabase() {
     try {
         // Apaga todos os registros das tabelas
         await db.games.clear(); // Limpa a tabela de jogos
