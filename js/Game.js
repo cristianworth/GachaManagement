@@ -1,33 +1,36 @@
+// Game.js file
 class Game {
     id;
     description;
     abbreviation;
     img;
     capStamina;
-    staminaPerMinute; 
+    staminaPerMinute;
+    color;
     currentStamina = 0; 
     maxStaminaAt = '';
     dateMaxStamina = new Date();
     pendingTasks = '';
 
-    constructor(description, abbreviation, img, capStamina, staminaPerMinute) {
+    constructor(description, abbreviation, img, capStamina, staminaPerMinute, color) {
         this.description = description;
         this.abbreviation = abbreviation;
         this.img = img;
         this.capStamina = capStamina;
         this.staminaPerMinute = staminaPerMinute;
+        this.color = color;
     }
 }
 
 var allGames = [];
 
-allGames.push(new Game(description = 'Genshin Impact', abbreviation = 'GI', img = 'img/genshin-icon.png', capStamina = 200, staminaPerMinute = 8));
-allGames.push(new Game(description = 'Honkai Star Rail', abbreviation = 'HSR', img = 'img/star-rail-icon.png', capStamina = 300, staminaPerMinute = 6));
-allGames.push(new Game(description = 'Wuthering Waves', abbreviation = 'WuWa', img = 'img/wuthering-waves-icon.png', capStamina = 240, staminaPerMinute = 6));
-allGames.push(new Game(description = 'Zenless Zone Zero', abbreviation = 'ZZZ', img = 'img/zzz-icon.png', capStamina = 240, staminaPerMinute = 6));
-allGames.push(new Game(description = 'Snowbreak', abbreviation = 'SK', img = 'img/snowbreak-icon.png', capStamina = 240, staminaPerMinute = 6));
-// allGames.push(new Game(description = 'Punishing Gray Raven', abbreviation = 'PGR', img = 'img/pgr-icon.png', capStamina = 240, staminaPerMinute = 6));
-// allGames.push(new Game(description = 'Nikke', abbreviation = 'NKK', img = 'img/nikke-icon.png', capStamina = 1, staminaPerMinute = 1440));
+allGames.push(new Game('Genshin Impact', 'GI', 'img/genshin-icon.png', 200, 8, '#b3d9ff'));
+allGames.push(new Game('Honkai Star Rail', 'HSR', 'img/star-rail-icon.png', 300, 6, '#d1f0d1'));
+allGames.push(new Game('Wuthering Waves', 'WuWa', 'img/wuthering-waves-icon.png', 240, 6, '#ffffb3'));
+allGames.push(new Game('Zenless Zone Zero', 'ZZZ', 'img/zzz-icon.png', 240, 6, '#e6ccff'));
+allGames.push(new Game('Snowbreak', 'SK', 'img/snowbreak-icon.png', 240, 6, '#ffb3b3'));
+// allGames.push(new Game('Punishing Gray Raven', 'PGR', 'img/pgr-icon.png', 240, 6, '#d9d9d9'));
+// allGames.push(new Game('Nikke', 'NKK', 'img/nikke-icon.png', 1, 1440, '#f2e6d9'));
 
 async function addGame(game) {
     try {

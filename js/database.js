@@ -1,7 +1,8 @@
+// database.js file
 const db = new Dexie("GachaManagement");
 
 db.version(1).stores({
-    games: '++id, description, abbreviation, img, capStamina, staminaPerMinute, currentStamina, maxStaminaAt, dateMaxStamina, pendingTasks',
+    games: '++id, description, abbreviation, img, capStamina, staminaPerMinute, currentStamina, maxStaminaAt, dateMaxStamina, pendingTasks, color',
     tasks: '++id, description, expirationDate, isDone, refreshType, gameId, gameDescription',
 });
 
@@ -18,9 +19,8 @@ async function populateInitialData() {
 
 async function clearDatabase() {
     try {
-        // Apaga todos os registros das tabelas
-        await db.games.clear(); // Limpa a tabela de jogos
-        await db.tasks.clear(); // Limpa a tabela de tarefas
+        await db.delete(); // Deleta todo o banco, incluindo tabelas e autoincrement
+        await db.open();   // Reabre o banco para recriação automática
 
         console.log("Banco de dados resetado com sucesso!");
     } catch (error) {
@@ -38,6 +38,6 @@ async function routineUpdateExpiratedTasks() {
         const expiratedDate = new Date(task.expirationDate);
         task.expirationDate.setDate(expiratedDate.getDate() + daysToRefresh);
         console.log(`updated ${task.gameDescription} expirated task ${task.description} from date ${formatDate(expiratedDate)} to ${formatDate(task.expirationDate)}`);
-        // updateTask(task);
+        updateTask(task);
     });
 }

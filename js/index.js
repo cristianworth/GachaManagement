@@ -1,3 +1,4 @@
+// index.js file
 async function updateGameStamina(gameId) {
     let game = await fetchGameById(gameId);
 
@@ -44,7 +45,8 @@ function initAddGameForm() {
             abbreviation, 
             'img/default-icon.png',
             capStamina,
-            staminaPerMinute
+            staminaPerMinute,
+            getRandomColor()
         );
 
         await addGame(newGame);
@@ -96,7 +98,7 @@ async function displayAllGames() {
 
     games.forEach(game => {
         let row = `
-            <tr>
+            <tr">
                 <td id="gameId${game.id}" hidden>${game.id}</td>
                 <td><img src=${game.img} alt="${game.description} Icon" class="icon"></td>
                 <td>${game.description}</td>
@@ -123,7 +125,7 @@ async function displayAllTasks() {
 
     tasks.forEach(task => {
         let row = `
-            <tr>
+            <tr style="background-color: ${task.game.color};">
                 <td id="taskId${task.id}" hidden>${task.id}</td>
                 <td><input type="checkbox" id="task1" value="${task.isDone}" ${task.isDone ? "checked" : ""} onclick="updateStatus(${task.id}, this.checked)"></td>
                 <td>${task.gameDescription}</td>
