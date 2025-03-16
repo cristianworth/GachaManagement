@@ -34,13 +34,13 @@ function initAddGameForm() {
     gameForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         
-        let description = document.getElementById("description").value;
+        let gameDescription = document.getElementById("gameDescription").value;
         let abbreviation = document.getElementById("abbreviation").value;
         let capStamina = document.getElementById("capStamina").value;
         let staminaPerMinute = document.getElementById("staminaPerMinute").value;
 
         let newGame = new Game(
-            description, 
+            gameDescription, 
             abbreviation, 
             'img/default-icon.png',
             capStamina,
@@ -61,12 +61,12 @@ function initAddTaskForm() {
         let gameId = selectGame.value;
         let gameDescription = selectGame.options[selectGame.selectedIndex].text;
 
-        let description = document.getElementById("description").value;
+        let taskDescription = document.getElementById("taskDescription").value;
         let expirationDate = getExpirationDate();
         let refreshType = parseInt(document.getElementById("refreshType").value);
 
         let newTask = new Task(
-            description,
+            taskDescription,
             expirationDate,
             refreshType,
             gameId,
@@ -79,8 +79,8 @@ function initAddTaskForm() {
 }
 
 function getExpirationDate() {
-    let expirationDay = document.getElementById("expirationDay").value;
-    let expirationHour = document.getElementById("expirationHour").value;
+    let expirationDay = parseInt(document.getElementById("expirationDay").value) | 0;
+    let expirationHour = parseInt(document.getElementById("expirationHour").value) | 0;
 
     let currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + expirationDay);
@@ -144,7 +144,7 @@ async function updateStatus(id, value) {
 }
 
 function validateNumberInput(input) {
-    input.value = input.value.replace(/[^0-9]/g, '');  // Removes non-numeric characters
+    input.value = input.value.replace(/[^0-9]/g, '');  // Removes non-numeric characters (.,)
 }
 
 async function populateGameDropDown() {

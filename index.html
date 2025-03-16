@@ -17,15 +17,15 @@
 </head>
 <body>
     <section>
-        <h1 href="https://github.com/cristianworth/GachaManagement/tree/dev" target="_blank" class="main-title">
-            <a href="https://github.com/cristianworth/GachaManagement/tree/dev" target="_blank">Gacha Management</a>
+        <h1 class="main-title">
+            <a href="https://cristianworth.github.io/GachaManagement/" target="_blank">Gacha Management</a>
             <br>
-            <a href="https://cristianworth.github.io/GachaManagement/" target="_blank">Dev Repo</a>
+            <a href="https://github.com/cristianworth/GachaManagement/tree/dev" target="_blank">Dev Repo</a>
         </h1>
         
         <form id="game-form">
-            <label for="description">Name of the game:</label>
-            <input id="description" type="text" required/>
+            <label for="gameDescription">Name of the game:</label>
+            <input id="gameDescription" type="text" required/>
             
             <label for="abbreviation">Abbreviation:</label>
             <input id="abbreviation" type="text" required/>
@@ -60,14 +60,14 @@
             <label for="gameId">Game:</label>
             <select id="gameId"></select>
             
-            <label for="description">Task:</label>
-            <input id="description" type="text" required/>
+            <label for="taskDescription">Task:</label>
+            <input id="taskDescription" type="text" required/>
 
             <label for="expirationDay">Expiration Day:</label>
-            <input id="expirationDay" type="number" required/>
+            <input id="expirationDay" type="number" oninput="validateNumberInput(this)" required/>
         
             <label for="expirationHour">Expiration Hour:</label>
-            <input id="expirationHour" type="number" required/>
+            <input id="expirationHour" type="number" oninput="validateNumberInput(this)" required/>
 
             <label for="refreshType">Refresh Type:</label>
             <select id="refreshType"></select>

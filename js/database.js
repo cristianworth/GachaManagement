@@ -13,6 +13,7 @@ async function populateInitialData() {
     console.log('Do something afeter open database.');
     await populateInitialGames();
     await populateInitialTasks();
+    await routineUpdateExpiratedTasks();
 }
 
 async function clearDatabase() {
@@ -25,4 +26,18 @@ async function clearDatabase() {
     } catch (error) {
         console.error("Erro ao resetar o banco de dados:", error);
     }
+}
+
+async function routineUpdateExpiratedTasks() {
+    var expiredTasks = await fetchAllExpiredTasks();
+
+    expiredTasks.forEach(task => {
+        var daysToRefresh = RefreshTypeEnum.BuscaDiasPorId(task.refreshType);
+        if (!daysToRefresh) return;
+
+        const expiratedDate = new Date(task.expirationDate);
+        task.expirationDate.setDate(expiratedDate.getDate() + daysToRefresh);
+        console.log(`updated ${task.gameDescription} expirated task ${task.description} from date ${formatDate(expiratedDate)} to ${formatDate(task.expirationDate)}`);
+        // updateTask(task);
+    });
 }
