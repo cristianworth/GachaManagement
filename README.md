@@ -1,38 +1,43 @@
-# Resin Management
+# 🎮 Gacha Management  
 
-![resin management](img/demo/resin-management-demo-01.png)
+O **Gacha Management** é uma aplicação projetada para ajudar jogadores de **gacha games** a gerenciar sua **resina/stamina** e acompanhar **tarefas recorrentes** nos jogos. Ele oferece ferramentas para rastrear a regeneração da stamina, organizar atividades programadas e facilitar o planejamento dentro dos jogos.  
 
-## Descrição
+![Resin Management](img/demo/resin-management-demo-01.png)  
 
-O Resin Management é uma aplicação desenvolvida para ajudar jogadores de gacha games a gerenciar a resina (ou stamina) de seus jogos favoritos. Com esta aplicação, você pode informar a resina atual, calcular quando ela estará cheia novamente e registrar as tarefas pendentes para cada jogo, como farmar ouro, experiência, bosses, e pré-farmar para níveis específicos.
+## 🚀 Funcionalidades  
 
-## Tecnologias Utilizadas
+### 🏆 **Gerenciamento de Resina**  
+- Registre a quantidade atual de **resina/stamina**.  
+- Calcule automaticamente o tempo necessário para atingir o limite máximo.  
+- Visualize rapidamente quando sua resina estará cheia.  
 
-- HTML
-- CSS
-- JavaScript
-- Dexie.js (IndexedDB Wrapper)
+### 📅 **Gacha Schedule**  
+- **Acompanhe eventos e tarefas recorrentes** dentro dos seus jogos favoritos.  
+- As tarefas são **vinculadas aos jogos cadastrados** e possuem **atualização automática** com base no tipo de recorrência:  
+  - **Diário**  
+  - **Semanal**  
+  - **Quinzenal**  
+  - **Mensal**  
+  - **Eventos personalizados**  
+- Permite visualizar todas as tarefas em um calendário simples, evitando que você esqueça **eventos importantes**.  
 
-## Funcionalidades
+![Gacha Schedule](img/demo/gacha-schedule-demo-02.png)  
 
-- **Gerenciamento de Resina:** Informe a resina atual e calcule quando ela estará cheia.
-- **Registro de Tarefas Pendentes:** Mantenha um registro das tarefas que você pretende fazer em cada jogo.
-- **Calculadora de Tempo para Eventos:** Calcule o tempo restante para o término de eventos nos jogos.
+## 🔧 Tecnologias Utilizadas  
+- **HTML**, **CSS**, **JavaScript**  
+- **Dexie.js** (IndexedDB Wrapper para armazenamento local)  
 
-# To-do List
-- [X] Order the games by the date where the stamina is closest to full
-- [X] Use IndexedDB instead of localStorage
-- [X] Create a function to show pending tasks to-do in the game
-- [ ] Add an option to mark/unmark gacha dailies as done
+## 🎯 Como Usar  
+1. **Adicione seus jogos** no sistema, informando o nome, abreviação e limite de stamina.  
+2. **Registre sua resina atual** e veja em quanto tempo ela estará cheia.  
+3. **Crie tarefas recorrentes** para acompanhar eventos importantes do jogo.  
+4. O sistema **atualiza automaticamente** as tarefas com base no período definido.  
 
-```
-npm install -g typescript // install it globally
-node -v // typescript runs under node
+## 📥 Instalação  
+Basta clonar o repositório e abrir o arquivo **index.html** no navegador:  
 
-tsc index.ts // gera arquivo js
-node index.js // runs the js file
-tsc index.ts --target "ESNEXT" // arquivo js com a versão mais recente do EcmaScript
-
-tsc --init // gera arquivo tsconfig.json
-tsc --watch // automatically generetes de js file
+```bash  
+git clone https://github.com/cristianworth/GachaManagement.git  
+cd GachaManagement  
+open index.html  
 ```
