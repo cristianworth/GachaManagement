@@ -1,5 +1,9 @@
 // database.js file
+import { populateInitialGames } from './Game.js'
+import { populateInitialTasks, fetchAllExpiredTasks } from './Task.js'
+
 const db = new Dexie("GachaManagement");
+import { formatDate } from './utils/dateUtils.js';
 
 db.version(1).stores({
     games: '++id, description, abbreviation, img, capStamina, staminaPerMinute, currentStamina, maxStaminaAt, dateMaxStamina, pendingTasks, color',
@@ -41,3 +45,5 @@ async function routineUpdateExpiratedTasks() {
         updateTask(task);
     });
 }
+
+export default db;

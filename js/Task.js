@@ -1,4 +1,7 @@
 // Task.js file
+import db from './database.js';
+import { fetchGameById } from './Game.js'
+
 class Task {
     id;
     description;
@@ -37,7 +40,9 @@ allTasks.push(new Task('Deadly Assault', new Date(2025, 2, 21, 6), RefreshTypeEn
 allTasks.push(new Task('Hollow Zero', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 4, "Zenless Zone Zero"));
 allTasks.push(new Task('Notorious Hunt', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 4, "Zenless Zone Zero"));
 
-async function addTask(task) {
+export default allTasks;
+
+export async function addTask(task) {
     try {
         await db.tasks.add(task);
         console.log("New Task added:", task);
@@ -46,7 +51,7 @@ async function addTask(task) {
     }
 }
 
-async function updateTask(task) {
+export async function updateTask(task) {
     if (!task.id) {
         console.log("Invalid task object id: ", task);
         return;
@@ -59,7 +64,7 @@ async function updateTask(task) {
     }
 }
 
-async function deleteTaskById(taskId) {
+export async function deleteTaskById(taskId) {
     // Not really used at the moment but can be used to update an existing Game, 
     //      delet it and then when the pages reload the populateInitialData will create it again
     // Examples:
@@ -78,7 +83,7 @@ async function deleteTaskById(taskId) {
     }
 }
 
-async function fetchAllTasks() {
+export async function fetchAllTasks() {
     try {
         const tasks = await db.tasks.orderBy("expirationDate").toArray();
 
@@ -96,7 +101,7 @@ async function fetchAllTasks() {
     }
 }
 
-async function fetchTaskById(id) {
+export async function fetchTaskById(id) {
     // Method to verify if the task exists
     try {
         const task = await db.tasks.get(id);
@@ -107,7 +112,7 @@ async function fetchTaskById(id) {
     }
 }
 
-async function fetchTasksByGame(gameId) {
+export async function fetchTasksByGame(gameId) {
     try {
         var task = await db.tasks.where("gameId").equals(gameId).toArray();
         return task;
@@ -116,7 +121,7 @@ async function fetchTasksByGame(gameId) {
     }
 }
 
-async function completeTask(taskId, isDone) {
+export async function completeTask(taskId, isDone) {
     try {
         var task = await db.tasks.update(taskId, { isDone: isDone });
         return task;
@@ -125,7 +130,7 @@ async function completeTask(taskId, isDone) {
     }
 }
 
-async function populateInitialTasks() {
+export async function populateInitialTasks() {
     try {
         const hasTasks = await hasAnyTask();
 
@@ -140,7 +145,7 @@ async function populateInitialTasks() {
     }
 }
 
-async function hasAnyTask() {
+export async function hasAnyTask() {
     try {
         const task = await db.tasks.limit(1).toArray();
         return task.length > 0;
@@ -150,7 +155,7 @@ async function hasAnyTask() {
     }
 }
 
-async function fetchAllExpiredTasks() {
+export async function fetchAllExpiredTasks() {
     try {
         const now = new Date();
         const tasks = await db.tasks.where("expirationDate").belowOrEqual(now).toArray();
