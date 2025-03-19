@@ -26,6 +26,7 @@ O **Gacha Management** é uma aplicação projetada para ajudar jogadores de **g
 ## 🔧 Tecnologias Utilizadas  
 - **HTML**, **CSS**, **JavaScript**  
 - **Dexie.js** (IndexedDB Wrapper para armazenamento local)  
+- **Node.js**
 
 ## 🎯 Como Usar  
 1. **Adicione seus jogos** no sistema, informando o nome, abreviação e limite de stamina.  
@@ -34,10 +35,11 @@ O **Gacha Management** é uma aplicação projetada para ajudar jogadores de **g
 4. O sistema **atualiza automaticamente** as tarefas com base no período definido.  
 
 ## 📥 Instalação  
-Basta clonar o repositório e abrir o arquivo **index.html** no navegador:  
+Para rodar o projeto localmente, siga os passos abaixo:  
 
 ```bash  
 git clone https://github.com/cristianworth/GachaManagement.git  
 cd GachaManagement  
-open index.html  
+npm install  
+npm start  
 ```
