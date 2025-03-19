@@ -1,3 +1,4 @@
+ // dateUtils.js
  function formatDateToDayHour(currentDate) {
     let day = currentDate.getDate();
     let hour = currentDate.getHours();

@@ -4,17 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <link rel="icon" type="image/png" href="/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/styles.css">
     <!-- Game precisa ser referenciado primeiro, pq ele é usado pelo index. A ORDEM IMPORTA AQUI -->
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
     <script src="js/enums/RefreshTypeEnum.js"></script> 
     <script src="js/utils/dateUtils.js"></script> 
-    <script src="js/utils/colorUtils.js"></script> 
+    <script type="module" src="js/utils/colorUtils.js"></script> 
     <script src="js/Game.js"></script> 
     <script src="js/Task.js"></script> 
     <script src="js/database.js"></script> 
-    <script src="js/index.js"></script> 
+    <script type="module" src="js/index.js"></script> 
     <title>Gacha Management</title>
 </head>
 <body>

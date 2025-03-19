@@ -1,4 +1,6 @@
 // index.js file
+import getRandomColor from './utils/colorUtils.js';
+
 async function updateGameStamina(gameId) {
     let game = await fetchGameById(gameId);
 
