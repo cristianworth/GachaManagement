@@ -1,6 +1,7 @@
 // database.js file
 import { populateInitialGames } from './Game.js'
 import { populateInitialTasks, fetchAllExpiredTasks } from './Task.js'
+import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
 
 const db = new Dexie("GachaManagement");
 import { formatDate } from './utils/dateUtils.js';

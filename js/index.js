@@ -3,6 +3,7 @@ import getRandomColor from './utils/colorUtils.js';
 import { formatDate, formatDateToDayHour } from './utils/dateUtils.js';
 import { addGame, updateGame, fetchAllGames, fetchGameById } from './Game.js'
 import { addTask, fetchAllTasks, completeTask } from './Task.js'
+import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
 
 async function updateGameStamina(gameId) {
     let game = await fetchGameById(gameId);

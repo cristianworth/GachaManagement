@@ -1,6 +1,7 @@
 // Task.js file
 import db from './database.js';
 import { fetchGameById } from './Game.js'
+import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
 
 class Task {
     id;
