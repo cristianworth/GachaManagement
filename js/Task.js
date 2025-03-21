@@ -3,7 +3,7 @@ import db from './database.js';
 import { fetchGameById } from './Game.js'
 import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
 
-class Task {
+export class Task {
     id;
     description;
     expirationDate;
@@ -22,7 +22,7 @@ class Task {
     }
 }
 
-var allTasks = [];
+export var allTasks = [];
 
 allTasks.push(new Task('Spyral Abyss', new Date(2025, 2, 16, 6), RefreshTypeEnum.BuscaIdPorNome('Monthly'), 1, "Genshin Impact"));
 allTasks.push(new Task('Imaginarium Theater', new Date(2025, 3, 1, 6), RefreshTypeEnum.BuscaIdPorNome('Monthly'), 1, "Genshin Impact"));
@@ -40,8 +40,6 @@ allTasks.push(new Task('Shiyu Defense', new Date(2025, 2, 28, 6), RefreshTypeEnu
 allTasks.push(new Task('Deadly Assault', new Date(2025, 2, 21, 6), RefreshTypeEnum.BuscaIdPorNome('TwoWeeks'), 4, "Zenless Zone Zero"));
 allTasks.push(new Task('Hollow Zero', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 4, "Zenless Zone Zero"));
 allTasks.push(new Task('Notorious Hunt', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 4, "Zenless Zone Zero"));
-
-export default allTasks;
 
 export async function addTask(task) {
     try {

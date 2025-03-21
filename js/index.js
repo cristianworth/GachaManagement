@@ -2,7 +2,7 @@
 import getRandomColor from './utils/colorUtils.js';
 import { formatDate, formatDateToDayHour } from './utils/dateUtils.js';
 import { addGame, updateGame, fetchAllGames, fetchGameById } from './Game.js'
-import { addTask, fetchAllTasks, completeTask } from './Task.js'
+import { addTask, fetchAllTasks, completeTask, Task } from './Task.js'
 import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
 
 async function updateGameStamina(gameId) {
@@ -112,7 +112,7 @@ async function displayAllGames() {
                     <textarea id="pendingTasks${game.id}" name="pendingTasks" spellcheck="false">${game.pendingTasks || ''}</textarea>
                 </td>
                 <td>
-                    <input class="input-centered spacing-left" id="newStamina${game.id}" name="newStamina" type="number" oninput="validateNumberInput(this)" value="${game.currentStamina | ''}" />
+                    <input class="input-centered spacing-left" id="newStamina" name="newStamina" type="number" value="${game.currentStamina | ''}" />
                     <button class="spacing-left" id="${game.id}" onclick="updateGameStamina(${game.id})">Update</button>
                 </td>
                 <td><span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${game.maxStaminaAt}<\span></td>
@@ -129,21 +129,43 @@ async function displayAllTasks() {
     let gameScheduleBody = document.getElementById("gameScheduleBody");
     gameScheduleBody.innerHTML = ''; // clear data
 
+    const fragment = document.createDocumentFragment();
+
     tasks.forEach(task => {
-        let row = `
-            <tr style="background-color: ${task.game.color};">
-                <td id="taskId${task.id}" hidden>${task.id}</td>
-                <td><input type="checkbox" id="task1" value="${task.isDone}" ${task.isDone ? "checked" : ""} onclick="updateStatus(${task.id}, this.checked)"></td>
-                <td>${task.gameDescription}</td>
-                <td>${task.description}</td>
-                <td>${RefreshTypeEnum.BuscaNomePorId(task.refreshType)}</td>
-                <td>${formatDate(task.expirationDate)}</td>
-                <td><button class="spacing-left" id="${task.id}" onclick="updateTaskData(${task.id})">Edit</button></td>
-            </tr>
+        // let checkbox = document.createElement("input");
+        // checkbox.type = "checkbox";
+        // checkbox.checked = task.isDone;
+        // checkbox.addEventListener("change", () => updateStatus(task.id, checkbox.checked));
+
+        // let taskCell = document.createElement("td");
+        // taskCell.textContent = task.gameDescription;
+
+        // row.appendChild(checkbox);
+        // row.appendChild(taskCell);
+
+        let row = document.createElement("tr");
+        if (task.game && task.game.color) {
+            row.style.backgroundColor = task.game.color;
+        }
+
+        row.innerHTML = `
+            <td hidden">${task.id}</td>
+            <td>
+                <input type="checkbox" data-task-id="${task.id}" ${task.isDone ? "checked" : ""}">
+            </td>
+            <td>${task.gameDescription}</td>
+            <td>${task.description}</td>
+            <td>${RefreshTypeEnum.BuscaNomePorId(task.refreshType)}</td>
+            <td>${formatDate(task.expirationDate)}</td>
+            <td>
+                <button class="spacing-left" data-edit-id="${task.id}"">Edit</button>
+            </td>
         `;
 
-        gameScheduleBody.innerHTML += row;
+        fragment.appendChild(row);
     });
+
+    gameScheduleBody.appendChild(fragment);
 }
 
 async function updateStatus(id, value) {
@@ -178,9 +200,41 @@ function populateRefreshTypeDropDown() {
     })
 }
 
+function updateTaskData () {
+    alert('not implemented yet')
+}
+
+function initValidateNumberInput() {
+    var inputValidateNumberInput = function(event) {
+        validateNumberInput(event.target);
+    };
+
+    document.getElementById('expirationDay').addEventListener('input', inputValidateNumberInput);
+    document.getElementById('expirationHour').addEventListener('input', inputValidateNumberInput);
+    // document.getElementById('newStamina').addEventListener('input', inputValidateNumberInput);
+}
+
+function initGameScheduleBody() {
+    var clickGameScheduleBody = function (event) {
+        if (event.terget.matches("input[type='checkbox']")) {
+            const taskId = event.target.dataset.taskId;
+            updateStatus(taskId, event.target.checked);
+        }
+
+        if (event.target.matches["button[data-edit-id]"]) {
+            const taskId = event.target.dataset.taskId;
+            updateTaskData(taskId);
+        }
+    };
+
+    document.getElementById('gameScheduleBody').addEventListener('click', clickGameScheduleBody);
+}
+
 function iniciaEventos() {
     initAddGameForm();
     initAddTaskForm();
+    initValidateNumberInput();
+    initGameScheduleBody();
 }
 
 function carregaDadosDoBanco() {
