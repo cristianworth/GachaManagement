@@ -16,3 +16,13 @@ export function formatDate(date) {
 
     return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
+
+export function calculateMaxStaminaDate(game) {
+    let totalStaminaLeft = game.capStamina - game.currentStamina;
+    let howManyMinutesUntilCapped = totalStaminaLeft * game.staminaPerMinute;
+
+    let forecastDate = new Date();
+    forecastDate.setMinutes(forecastDate.getMinutes() + howManyMinutesUntilCapped);
+
+    return forecastDate;
+}

@@ -1,40 +1,9 @@
 // index.js file
 import getRandomColor from './utils/colorUtils.js';
-import { formatDate, formatDateToDayHour } from './utils/dateUtils.js';
-import { addGame, updateGame, fetchAllGames, fetchGameById } from './Game.js'
+import { formatDate, formatDateToDayHour, calculateMaxStaminaDate } from './utils/dateUtils.js';
+import { addGame, updateGame, fetchAllGames, fetchGameById, Game } from './Game.js'
 import { addTask, fetchAllTasks, completeTask, Task } from './Task.js'
 import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
-
-async function updateGameStamina(gameId) {
-    let game = await fetchGameById(gameId);
-
-    const staminaValue = parseInt(document.getElementById(`newStamina${gameId}`).value, 10);
-    const pendingTasksValue = document.getElementById(`pendingTasks${gameId}`).value;
-
-    if (!isNaN(staminaValue)) {
-        game.currentStamina = staminaValue;
-        game.pendingTasks = pendingTasksValue;
-        game.dateMaxStamina = calculateMaxStaminaDate(game);
-        game.maxStaminaAt = formatDateToDayHour(game.dateMaxStamina);
-
-        document.getElementById(`newMaxStaminaAt${gameId}`).textContent = game.maxStaminaAt;
-
-        await updateGame(game);
-        displayAllGames();
-    } else {
-        alert("Please enter a valid integer number for stamina.");
-    }
-}
-
-function calculateMaxStaminaDate(game) {
-    let totalStaminaLeft = game.capStamina - game.currentStamina;
-    let howManyMinutesUntilCapped = totalStaminaLeft * game.staminaPerMinute;
-
-    let forecastDate = new Date();
-    forecastDate.setMinutes(forecastDate.getMinutes() + howManyMinutesUntilCapped);
-
-    return forecastDate;
-}
 
 function initAddGameForm() {
     let gameForm = document.getElementById("game-form");
@@ -103,25 +72,55 @@ async function displayAllGames() {
     gameListBody.innerHTML = ''; // clear data
 
     games.forEach(game => {
-        let row = `
-            <tr">
-                <td id="gameId${game.id}" hidden>${game.id}</td>
-                <td><img src=${game.img} alt="${game.description} Icon" class="icon"></td>
-                <td>${game.description}</td>
-                <td>
-                    <textarea id="pendingTasks${game.id}" name="pendingTasks" spellcheck="false">${game.pendingTasks || ''}</textarea>
-                </td>
-                <td>
-                    <input class="input-centered spacing-left" id="newStamina" name="newStamina" type="number" value="${game.currentStamina | ''}" />
-                    <button class="spacing-left" id="${game.id}" onclick="updateGameStamina(${game.id})">Update</button>
-                </td>
-                <td><span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${game.maxStaminaAt}<\span></td>
-                <td hidden>${game.dateMaxStamina}</td>
-            </tr>
+        let row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>
+                <img src=${game.img} alt="${game.description} Icon" class="icon">
+            </td>
+            <td>${game.description}</td>
+            <td>
+                <textarea id="pendingTask${game.id}" spellcheck="false">${game.pendingTasks || ''}</textarea>
+            </td>
+            <td>
+                <input class="input-centered spacing-left" id="currentStamina${game.id}" type="number" value="${game.currentStamina | ''}" />
+                <button class="spacing-left" id="edit-game-${game.id}">Edit</button>
+            </td>
+            <td>
+                <span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${game.maxStaminaAt}<\span>
+            </td>
         `;
 
-        gameListBody.innerHTML += row;
+        gameListBody.appendChild(row);
+        addGameEventListeners(game);
     });
+}
+
+function addGameEventListeners(game) {
+    const editGame = document.getElementById(`edit-game-${game.id}`);
+
+    if (editGame) {
+        editGame.addEventListener("click", () => prepareToUpdateGame(game.id));
+    }
+}
+
+async function prepareToUpdateGame(gameId) {
+    let game = await fetchGameById(gameId);
+
+    const currentStamina = parseInt(document.getElementById(`currentStamina${game.id}`).value, 10);
+    const pendingTask = document.getElementById(`pendingTask${gameId}`).value;
+
+    if (!isNaN(currentStamina)) {
+        game.currentStamina = currentStamina;
+        game.pendingTasks = pendingTask;
+        game.dateMaxStamina = calculateMaxStaminaDate(game);
+        game.maxStaminaAt = formatDateToDayHour(game.dateMaxStamina);
+        
+        await updateGame(game);
+        await displayAllGames();
+    } else {
+        alert("Please enter a valid number for stamina.");
+    }
 }
 
 async function displayAllTasks() {
@@ -151,12 +150,28 @@ async function displayAllTasks() {
         gameScheduleBody.appendChild(row);
         addTaskEventListeners(task);
     });
+}
 
+function addTaskEventListeners(task) {
+    const checkbox = document.getElementById(`task-checkbox-${task.id}`);
+    const editButton = document.getElementById(`edit-task-${task.id}`);
+
+    if (checkbox) {
+        checkbox.addEventListener("change", () => updateStatus(task.id, checkbox.checked))
+    }
+    
+    if (editButton) {
+        editButton.addEventListener("click", () => prepareToUpdateTask(task.id))
+    }
 }
 
 async function updateStatus(id, value) {
     await completeTask(id, value);
     await displayAllTasks();
+}
+
+async function prepareToUpdateTask () {
+    alert('not implemented yet')
 }
 
 function validateNumberInput(input) {
@@ -186,10 +201,6 @@ function populateRefreshTypeDropDown() {
     })
 }
 
-function updateTaskData () {
-    alert('not implemented yet')
-}
-
 function initValidateNumberInput() {
     var inputValidateNumberInput = function(event) {
         validateNumberInput(event.target);
@@ -197,20 +208,6 @@ function initValidateNumberInput() {
 
     document.getElementById('expirationDay').addEventListener('input', inputValidateNumberInput);
     document.getElementById('expirationHour').addEventListener('input', inputValidateNumberInput);
-    // document.getElementById('newStamina').addEventListener('input', inputValidateNumberInput);
-}
-
-function addTaskEventListeners(task) {
-    const checkbox = document.getElementById(`task-checkbox-${task.id}`);
-    const editButton = document.getElementById(`edit-task-${task.id}`);
-
-    if (checkbox) {
-        checkbox.addEventListener("change", () => updateStatus(task.id, checkbox.checked))
-    }
-    
-    if (editButton) {
-        editButton.addEventListener("change", () => updateTaskData(task.id))
-    }
 }
 
 function iniciaEventos() {

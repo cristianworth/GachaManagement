@@ -22,7 +22,7 @@ export class Task {
     }
 }
 
-export var allTasks = [];
+export const allTasks = [];
 
 allTasks.push(new Task('Spyral Abyss', new Date(2025, 2, 16, 6), RefreshTypeEnum.BuscaIdPorNome('Monthly'), 1, "Genshin Impact"));
 allTasks.push(new Task('Imaginarium Theater', new Date(2025, 3, 1, 6), RefreshTypeEnum.BuscaIdPorNome('Monthly'), 1, "Genshin Impact"));
