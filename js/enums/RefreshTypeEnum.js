@@ -44,3 +44,5 @@ class RefreshTypeEnum {
         return null;
     }
 }
+
+export default RefreshTypeEnum;

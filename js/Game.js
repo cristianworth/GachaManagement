@@ -1,5 +1,7 @@
 // Game.js file
-class Game {
+import db from './database.js';
+
+export class Game {
     id;
     description;
     abbreviation;
@@ -22,8 +24,8 @@ class Game {
     }
 }
 
-var allGames = [];
 
+export const allGames = [];
 allGames.push(new Game('Genshin Impact', 'GI', 'img/genshin-icon.png', 200, 8, '#b3d9ff'));
 allGames.push(new Game('Honkai Star Rail', 'HSR', 'img/star-rail-icon.png', 300, 6, '#d1f0d1'));
 allGames.push(new Game('Wuthering Waves', 'WuWa', 'img/wuthering-waves-icon.png', 240, 6, '#ffffb3'));
@@ -32,7 +34,7 @@ allGames.push(new Game('Snowbreak', 'SK', 'img/snowbreak-icon.png', 240, 6, '#ff
 // allGames.push(new Game('Punishing Gray Raven', 'PGR', 'img/pgr-icon.png', 240, 6, '#d9d9d9'));
 // allGames.push(new Game('Nikke', 'NKK', 'img/nikke-icon.png', 1, 1440, '#f2e6d9'));
 
-async function addGame(game) {
+export async function addGame(game) {
     try {
         await db.games.add(game);
         console.log("New Game added:", game);
@@ -41,7 +43,7 @@ async function addGame(game) {
     }
 }
 
-async function updateGame(game) {
+export async function updateGame(game) {
     // Method used to mainly update the amout of stamina on the main screen
     if (!game.id) {
         return;
@@ -54,7 +56,7 @@ async function updateGame(game) {
     }
 }
 
-async function deleteGameById(gameId) {
+export async function deleteGameById(gameId) {
     // Not really used at the moment but can be used to update an existing Game, 
     //      delet it and then when the pages reload the populateInitialData will create it again
     // Examples:
@@ -74,7 +76,7 @@ async function deleteGameById(gameId) {
     }
 }
 
-async function fetchAllGames() {
+export async function fetchAllGames() {
     // Method used to load allGames into the main page. 
     try {
         const games = await db.games.orderBy("dateMaxStamina").toArray();
@@ -86,7 +88,7 @@ async function fetchAllGames() {
     }
 }
 
-async function fetchGameById(id) {
+export async function fetchGameById(id) {
     // Method to verify if the game exists
     try {
         const game = await db.games.get(id);
@@ -97,7 +99,7 @@ async function fetchGameById(id) {
     }
 }
 
-async function populateInitialGames() {
+export async function populateInitialGames() {
     try {
         const hasGames = await hasAnyGame();
 
@@ -112,7 +114,7 @@ async function populateInitialGames() {
     }
 }
 
-async function hasAnyGame() {
+export async function hasAnyGame() {
     try {
         const game = await db.games.limit(1).toArray();
         return game.length > 0;

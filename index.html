@@ -4,17 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <link rel="icon" type="image/png" href="/img/favicon.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <link rel="stylesheet" href="css/styles.css">
     <!-- Game precisa ser referenciado primeiro, pq ele é usado pelo index. A ORDEM IMPORTA AQUI -->
-    <script src="js/enums/RefreshTypeEnum.js"></script> 
-    <script src="js/utils/dateUtils.js"></script> 
-    <script src="js/utils/colorUtils.js"></script> 
-    <script src="js/Game.js"></script> 
-    <script src="js/Task.js"></script> 
-    <script src="js/database.js"></script> 
-    <script src="js/index.js"></script> 
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <script type="module" src="js/enums/RefreshTypeEnum.js"></script> 
+    <script type="module" src="js/utils/dateUtils.js"></script> 
+    <script type="module" src="js/utils/colorUtils.js"></script> 
+    <script type="module" src="js/database.js"></script> 
+    <script type="module" src="js/Game.js"></script> 
+    <script type="module" src="js/Task.js"></script> 
+    <script type="module" src="js/index.js"></script> 
     <title>Gacha Management</title>
 </head>
 <body>
@@ -33,10 +34,10 @@
             <input id="abbreviation" type="text" required/>
             
             <label for="capStamina">Cap Stamina:</label>
-            <input id="capStamina" type="text" required/>
+            <input id="capStamina" value="240" type="text" required/>
             
             <label for="staminaPerMinute">Stamina p/ Minute:</label>
-            <input id="staminaPerMinute" type="text" required/>
+            <input id="staminaPerMinute" value="6" type="text" required/>
             
             <button type="submit">Add Game</button>
         </form>
@@ -66,10 +67,10 @@
             <input id="taskDescription" type="text" required/>
 
             <label for="expirationDay">Expiration Day:</label>
-            <input id="expirationDay" type="number" oninput="validateNumberInput(this)" required/>
+            <input id="expirationDay" type="number" value="0" required/>
         
             <label for="expirationHour">Expiration Hour:</label>
-            <input id="expirationHour" type="number" oninput="validateNumberInput(this)" required/>
+            <input id="expirationHour" type="number" value="0" required/>
 
             <label for="refreshType">Refresh Type:</label>
             <select id="refreshType"></select>

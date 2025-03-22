@@ -1,10 +1,28 @@
 
-# To-do List
-- [X] Order the games by the date where the stamina is closest to full
-- [X] Use IndexedDB instead of localStorage
-- [X] Create a function to show pending tasks to-do in the game
-- [X] Add an option to mark/unmark gacha dailies as done
+# Functionalitis
+## Task
+- [X] Update Is Done Status
+- [X] Create new Task
+- [ ] Edit Task
 
+## Game
+- [ ] Update stamina (Edit Game)
+- [ ] Create new Game
+
+# To-do List
+- [ ] Create a log table to save the changes from tasks / games
+- [ ] Create tests for the main funcionalities
+- [ ] Improve css/UI/UX
+- [ ] Edit funcionality (redirect to a new Form Page)
+- [ ] Reorder structure (separate Task an dbTask)
+- [ ] Confirm Dialog Message that the operation was sucessfull
+- [ ] Reorder Is Done to last from the display list
+
+# Bug fix
+- [ ] First time entering the page is blank (it's now waiting untill all data is populated)
+- [ ] Fix 2 calls for displayAllGames when the page loads
+
+### TypeScript cmds
 ```
 npm install -g typescript // install it globally
 node -v // typescript runs under node
