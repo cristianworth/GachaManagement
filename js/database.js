@@ -1,10 +1,10 @@
 // database.js file
 import { populateInitialGames } from './Game.js'
-import { populateInitialTasks, fetchAllExpiredTasks } from './Task.js'
+import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './Task.js'
 import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
+import { formatDate } from './utils/dateUtils.js';
 
 const db = new Dexie("GachaManagement");
-import { formatDate } from './utils/dateUtils.js';
 
 db.version(1).stores({
     games: '++id, description, abbreviation, img, capStamina, staminaPerMinute, currentStamina, maxStaminaAt, dateMaxStamina, pendingTasks, color',
@@ -15,14 +15,14 @@ db.open().then(populateInitialData).catch((error) => {
     console.error("Failed to open the database:", error);
 });
 
-async function populateInitialData() {
+export async function populateInitialData() {
     console.log('Do something afeter open database.');
     await populateInitialGames();
     await populateInitialTasks();
     await routineUpdateExpiratedTasks();
 }
 
-async function clearDatabase() {
+export async function clearDatabase() {
     try {
         await db.delete(); // Deleta todo o banco, incluindo tabelas e autoincrement
         await db.open();   // Reabre o banco para recriação automática
@@ -33,7 +33,7 @@ async function clearDatabase() {
     }
 }
 
-async function routineUpdateExpiratedTasks() {
+export async function routineUpdateExpiratedTasks() {
     var expiredTasks = await fetchAllExpiredTasks();
 
     expiredTasks.forEach(task => {

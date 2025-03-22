@@ -66,7 +66,7 @@ function initAddTaskForm() {
         e.preventDefault();
         
         let selectGame = document.getElementById("gameId");
-        let gameId = selectGame.value;
+        let gameId = parseInt(selectGame.value);
         let gameDescription = selectGame.options[selectGame.selectedIndex].text;
 
         let taskDescription = document.getElementById("taskDescription").value;
@@ -129,43 +129,29 @@ async function displayAllTasks() {
     let gameScheduleBody = document.getElementById("gameScheduleBody");
     gameScheduleBody.innerHTML = ''; // clear data
 
-    const fragment = document.createDocumentFragment();
-
     tasks.forEach(task => {
-        // let checkbox = document.createElement("input");
-        // checkbox.type = "checkbox";
-        // checkbox.checked = task.isDone;
-        // checkbox.addEventListener("change", () => updateStatus(task.id, checkbox.checked));
-
-        // let taskCell = document.createElement("td");
-        // taskCell.textContent = task.gameDescription;
-
-        // row.appendChild(checkbox);
-        // row.appendChild(taskCell);
-
         let row = document.createElement("tr");
         if (task.game && task.game.color) {
             row.style.backgroundColor = task.game.color;
         }
 
         row.innerHTML = `
-            <td hidden">${task.id}</td>
             <td>
-                <input type="checkbox" data-task-id="${task.id}" ${task.isDone ? "checked" : ""}">
+                <input type="checkbox" id="task-checkbox-${task.id}" ${task.isDone ? "checked" : ""}>
             </td>
             <td>${task.gameDescription}</td>
             <td>${task.description}</td>
             <td>${RefreshTypeEnum.BuscaNomePorId(task.refreshType)}</td>
             <td>${formatDate(task.expirationDate)}</td>
             <td>
-                <button class="spacing-left" data-edit-id="${task.id}"">Edit</button>
+                <button class="spacing-left" id="edit-task-${task.id}">Edit</button>
             </td>
         `;
 
-        fragment.appendChild(row);
+        gameScheduleBody.appendChild(row);
+        addTaskEventListeners(task);
     });
 
-    gameScheduleBody.appendChild(fragment);
 }
 
 async function updateStatus(id, value) {
@@ -214,27 +200,23 @@ function initValidateNumberInput() {
     // document.getElementById('newStamina').addEventListener('input', inputValidateNumberInput);
 }
 
-function initGameScheduleBody() {
-    var clickGameScheduleBody = function (event) {
-        if (event.terget.matches("input[type='checkbox']")) {
-            const taskId = event.target.dataset.taskId;
-            updateStatus(taskId, event.target.checked);
-        }
+function addTaskEventListeners(task) {
+    const checkbox = document.getElementById(`task-checkbox-${task.id}`);
+    const editButton = document.getElementById(`edit-task-${task.id}`);
 
-        if (event.target.matches["button[data-edit-id]"]) {
-            const taskId = event.target.dataset.taskId;
-            updateTaskData(taskId);
-        }
-    };
-
-    document.getElementById('gameScheduleBody').addEventListener('click', clickGameScheduleBody);
+    if (checkbox) {
+        checkbox.addEventListener("change", () => updateStatus(task.id, checkbox.checked))
+    }
+    
+    if (editButton) {
+        editButton.addEventListener("change", () => updateTaskData(task.id))
+    }
 }
 
 function iniciaEventos() {
     initAddGameForm();
     initAddTaskForm();
     initValidateNumberInput();
-    initGameScheduleBody();
 }
 
 function carregaDadosDoBanco() {
