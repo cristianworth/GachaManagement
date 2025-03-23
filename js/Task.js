@@ -31,6 +31,7 @@ allTasks.push(new Task('Memory of Chaos', new Date(2025, 2, 31, 6), RefreshTypeE
 allTasks.push(new Task('Pure Fiction', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('SixWeeks'), 2, "Honkai Star Rail"));
 allTasks.push(new Task('Apocalyptic Shadow', new Date(2025, 3, 14, 6), RefreshTypeEnum.BuscaIdPorNome('SixWeeks'), 2, "Honkai Star Rail"));
 allTasks.push(new Task('Echo of War', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 2, "Honkai Star Rail"));
+allTasks.push(new Task('Simulated Universe', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 2, "Honkai Star Rail"));
 
 allTasks.push(new Task('Tower of Adversity', new Date(2025, 2, 31, 6), RefreshTypeEnum.BuscaIdPorNome('FourWeeks'), 3, "Wuthering Waves"));
 allTasks.push(new Task('Whimpering Waves', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('BiMonthly'), 3, "Wuthering Waves"));

@@ -17,6 +17,7 @@
 - [ ] Reorder structure (separate Task an dbTask)
 - [ ] Confirm Dialog Message that the operation was sucessfull
 - [ ] Reorder Is Done to last from the display list
+- [ ] Filter by Refresh Type (Event, Weekly)
 
 # Bug fix
 - [ ] First time entering the page is blank (it's now waiting untill all data is populated)
