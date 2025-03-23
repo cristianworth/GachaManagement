@@ -1,9 +1,33 @@
 // index.js file
 import getRandomColor from './utils/colorUtils.js';
-import { formatDate, formatDateToDayHour, calculateMaxStaminaDate } from './utils/dateUtils.js';
+import { formatDate, formatDateToDayHour, calculateMaxStaminaDate, getExpirationDate } from './utils/dateUtils.js';
 import { addGame, updateGame, fetchAllGames, fetchGameById, Game } from './Game.js'
 import { addTask, fetchAllTasks, completeTask, Task } from './Task.js'
 import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
+import { validateNumberInput } from './utils/validationUtils.js'
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    iniciaEventos();
+    carregaDadosDoBanco();
+    populaElementosDaTela();
+});
+
+function iniciaEventos() {
+    initAddGameForm();
+    initAddTaskForm();
+    initValidateNumberInput();
+}
+
+function carregaDadosDoBanco() {
+    displayAllGames();
+    displayAllTasks();
+}
+
+function populaElementosDaTela() {
+    populateGameDropDown();
+    populateRefreshTypeDropDown();
+}
 
 function initAddGameForm() {
     let gameForm = document.getElementById("game-form");
@@ -27,43 +51,6 @@ function initAddGameForm() {
         await addGame(newGame);
         displayAllGames();
     });
-}
-
-function initAddTaskForm() {
-    let taskForm = document.getElementById("task-form");
-    taskForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        
-        let selectGame = document.getElementById("gameId");
-        let gameId = parseInt(selectGame.value);
-        let gameDescription = selectGame.options[selectGame.selectedIndex].text;
-
-        let taskDescription = document.getElementById("taskDescription").value;
-        let expirationDate = getExpirationDate();
-        let refreshType = parseInt(document.getElementById("refreshType").value);
-
-        let newTask = new Task(
-            taskDescription,
-            expirationDate,
-            refreshType,
-            gameId,
-            gameDescription,
-        );
-
-        await addTask(newTask);
-        displayAllTasks();
-    })
-}
-
-function getExpirationDate() {
-    let expirationDay = parseInt(document.getElementById("expirationDay").value) | 0;
-    let expirationHour = parseInt(document.getElementById("expirationHour").value) | 0;
-
-    let currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + expirationDay);
-    currentDate.setHours(currentDate.getHours() + expirationHour);
-
-    return currentDate;
 }
 
 async function displayAllGames() {
@@ -99,28 +86,56 @@ async function displayAllGames() {
 function addGameEventListeners(game) {
     const editGame = document.getElementById(`edit-game-${game.id}`);
 
+    async function prepareToUpdateGame(gameId) {
+        let game = await fetchGameById(gameId);
+    
+        const currentStamina = parseInt(document.getElementById(`currentStamina${game.id}`).value, 10);
+        const pendingTask = document.getElementById(`pendingTask${gameId}`).value;
+    
+        if (!isNaN(currentStamina)) {
+            game.currentStamina = currentStamina;
+            game.pendingTasks = pendingTask;
+            game.dateMaxStamina = calculateMaxStaminaDate(game);
+            game.maxStaminaAt = formatDateToDayHour(game.dateMaxStamina);
+            
+            await updateGame(game);
+            await displayAllGames();
+        } else {
+            alert("Please enter a valid number for stamina.");
+        }
+    }
+    
     if (editGame) {
         editGame.addEventListener("click", () => prepareToUpdateGame(game.id));
     }
 }
 
-async function prepareToUpdateGame(gameId) {
-    let game = await fetchGameById(gameId);
-
-    const currentStamina = parseInt(document.getElementById(`currentStamina${game.id}`).value, 10);
-    const pendingTask = document.getElementById(`pendingTask${gameId}`).value;
-
-    if (!isNaN(currentStamina)) {
-        game.currentStamina = currentStamina;
-        game.pendingTasks = pendingTask;
-        game.dateMaxStamina = calculateMaxStaminaDate(game);
-        game.maxStaminaAt = formatDateToDayHour(game.dateMaxStamina);
+function initAddTaskForm() {
+    let taskForm = document.getElementById("task-form");
+    taskForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
         
-        await updateGame(game);
-        await displayAllGames();
-    } else {
-        alert("Please enter a valid number for stamina.");
-    }
+        let selectGame = document.getElementById("gameId");
+        let gameId = parseInt(selectGame.value);
+        let gameDescription = selectGame.options[selectGame.selectedIndex].text;
+
+        let taskDescription = document.getElementById("taskDescription").value;
+        let expirationDay = parseInt(document.getElementById("expirationDay").value) | 0;
+        let expirationHour = parseInt(document.getElementById("expirationHour").value) | 0;    
+        let expirationDate = getExpirationDate(expirationDay, expirationHour);
+        let refreshType = parseInt(document.getElementById("refreshType").value);
+
+        let newTask = new Task(
+            taskDescription,
+            expirationDate,
+            refreshType,
+            gameId,
+            gameDescription,
+        );
+
+        await addTask(newTask);
+        displayAllTasks();
+    })
 }
 
 async function displayAllTasks() {
@@ -156,26 +171,31 @@ function addTaskEventListeners(task) {
     const checkbox = document.getElementById(`task-checkbox-${task.id}`);
     const editButton = document.getElementById(`edit-task-${task.id}`);
 
+    async function updateStatus(id, value) {
+        await completeTask(id, value);
+        await displayAllTasks();
+    }    
+
     if (checkbox) {
         checkbox.addEventListener("change", () => updateStatus(task.id, checkbox.checked))
     }
     
+    async function prepareToUpdateTask () {
+        alert('not implemented yet')
+    }    
+
     if (editButton) {
         editButton.addEventListener("click", () => prepareToUpdateTask(task.id))
     }
 }
 
-async function updateStatus(id, value) {
-    await completeTask(id, value);
-    await displayAllTasks();
-}
+function initValidateNumberInput() {
+    var inputValidateNumberInput = function(event) {
+        validateNumberInput(event.target);
+    };
 
-async function prepareToUpdateTask () {
-    alert('not implemented yet')
-}
-
-function validateNumberInput(input) {
-    input.value = input.value.replace(/[^0-9]/g, '');  // Removes non-numeric characters (.,)
+    document.getElementById('expirationDay').addEventListener('input', inputValidateNumberInput);
+    document.getElementById('expirationHour').addEventListener('input', inputValidateNumberInput);
 }
 
 async function populateGameDropDown() {
@@ -200,34 +220,3 @@ function populateRefreshTypeDropDown() {
         selectRefreshType.appendChild(option);
     })
 }
-
-function initValidateNumberInput() {
-    var inputValidateNumberInput = function(event) {
-        validateNumberInput(event.target);
-    };
-
-    document.getElementById('expirationDay').addEventListener('input', inputValidateNumberInput);
-    document.getElementById('expirationHour').addEventListener('input', inputValidateNumberInput);
-}
-
-function iniciaEventos() {
-    initAddGameForm();
-    initAddTaskForm();
-    initValidateNumberInput();
-}
-
-function carregaDadosDoBanco() {
-    displayAllGames();
-    displayAllTasks();
-}
-
-function populaElementosDaTela() {
-    populateGameDropDown();
-    populateRefreshTypeDropDown();
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    iniciaEventos();
-    carregaDadosDoBanco();
-    populaElementosDaTela();
-});

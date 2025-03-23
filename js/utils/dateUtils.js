@@ -26,3 +26,11 @@ export function calculateMaxStaminaDate(game) {
 
     return forecastDate;
 }
+
+export function getExpirationDate(expirationDay, expirationHour) {
+    let currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + expirationDay);
+    currentDate.setHours(currentDate.getHours() + expirationHour);
+
+    return currentDate;
+}
