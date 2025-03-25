@@ -14,7 +14,7 @@
 - [ ] Create tests for the main funcionalities
 - [ ] Improve css/UI/UX
 - [ ] Edit funcionality (redirect to a new Form Page)
-- [ ] Reorder structure (separate Task an dbTask)
+- [X] Reorder structure (separate Task an dbTask)
 - [ ] Confirm Dialog Message that the operation was sucessfull
 - [ ] Reorder Is Done to last from the display list
 - [ ] Filter by Refresh Type (Event, Weekly)

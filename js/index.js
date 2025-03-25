@@ -1,8 +1,10 @@
 // index.js file
 import getRandomColor from './utils/colorUtils.js';
 import { formatDate, formatDateToDayHour, calculateMaxStaminaDate, getExpirationDate } from './utils/dateUtils.js';
-import { addGame, updateGame, fetchAllGames, fetchGameById, Game } from './Game.js'
-import { addTask, fetchAllTasks, completeTask, Task } from './Task.js'
+import { Game } from './data/Game.js'
+import { addGame, updateGame, fetchAllGames, fetchGameById,} from './database/gameDB.js'
+import { Task } from './data/Task.js'
+import { addTask, fetchAllTasks, completeTask } from './database/taskDB.js'
 import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
 import { validateNumberInput } from './utils/validationUtils.js'
 

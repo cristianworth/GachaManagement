@@ -1,8 +1,8 @@
 // database.js file
-import { populateInitialGames } from './Game.js'
-import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './Task.js'
-import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
-import { formatDate } from './utils/dateUtils.js';
+import { populateInitialGames } from './gameDB.js'
+import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './taskDB.js'
+import RefreshTypeEnum from '../enums/RefreshTypeEnum.js'
+import { formatDate } from '../utils/dateUtils.js';
 
 const db = new Dexie("GachaManagement");
 
