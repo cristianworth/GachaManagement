@@ -18,10 +18,17 @@
 - [ ] Confirm Dialog Message that the operation was sucessfull
 - [ ] Reorder Is Done to last from the display list
 - [ ] Filter by Refresh Type (Event, Weekly)
+- [ ] Clear form after adding a new task/game
 
 # Bug fix
 - [ ] First time entering the page is blank (it's now waiting untill all data is populated)
 - [ ] Fix 2 calls for displayAllGames when the page loads
+
+## Main points learned
+- Use of script module
+- New library Dexie Database
+- Use of Event Listeners intead of inline functions
+- Deprecated use of `var` (function scoped), use instead `const` and `let` (block scope)
 
 ### TypeScript cmds
 ```

@@ -6,40 +6,39 @@ import { addTask, fetchAllTasks, completeTask, Task } from './Task.js'
 import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
 import { validateNumberInput } from './utils/validationUtils.js'
 
-
 document.addEventListener("DOMContentLoaded", function () {
-    iniciaEventos();
-    carregaDadosDoBanco();
-    populaElementosDaTela();
+    initializeEventListeners();
+    loadDatabaseData();
+    populateUIElements();
 });
 
-function iniciaEventos() {
-    initAddGameForm();
-    initAddTaskForm();
-    initValidateNumberInput();
+function initializeEventListeners() {
+    initializeGameForm();
+    initializeTaskForm();
+    initializeNumberInputValidation();
 }
 
-function carregaDadosDoBanco() {
+function loadDatabaseData() {
     displayAllGames();
     displayAllTasks();
 }
 
-function populaElementosDaTela() {
+function populateUIElements() {
     populateGameDropDown();
     populateRefreshTypeDropDown();
 }
 
-function initAddGameForm() {
-    let gameForm = document.getElementById("game-form");
+function initializeGameForm() {
+    const gameForm = document.getElementById("game-form");
     gameForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         
-        let gameDescription = document.getElementById("gameDescription").value;
-        let abbreviation = document.getElementById("abbreviation").value;
-        let capStamina = document.getElementById("capStamina").value;
-        let staminaPerMinute = document.getElementById("staminaPerMinute").value;
+        const gameDescription = document.getElementById("gameDescription").value;
+        const abbreviation = document.getElementById("abbreviation").value;
+        const capStamina = document.getElementById("capStamina").value;
+        const staminaPerMinute = document.getElementById("staminaPerMinute").value;
 
-        let newGame = new Game(
+        const newGame = new Game(
             gameDescription, 
             abbreviation, 
             'img/default-icon.png',
@@ -54,8 +53,8 @@ function initAddGameForm() {
 }
 
 async function displayAllGames() {
-    var games = await fetchAllGames();
-    let gameListBody = document.getElementById("gameListBody");
+    const games = await fetchAllGames();
+    const gameListBody = document.getElementById("gameListBody");
     gameListBody.innerHTML = ''; // clear data
 
     games.forEach(game => {
@@ -86,44 +85,44 @@ async function displayAllGames() {
 function addGameEventListeners(game) {
     const editGame = document.getElementById(`edit-game-${game.id}`);
 
-    async function prepareToUpdateGame(gameId) {
-        let game = await fetchGameById(gameId);
-    
-        const currentStamina = parseInt(document.getElementById(`currentStamina${game.id}`).value, 10);
-        const pendingTask = document.getElementById(`pendingTask${gameId}`).value;
-    
-        if (!isNaN(currentStamina)) {
-            game.currentStamina = currentStamina;
-            game.pendingTasks = pendingTask;
-            game.dateMaxStamina = calculateMaxStaminaDate(game);
-            game.maxStaminaAt = formatDateToDayHour(game.dateMaxStamina);
-            
-            await updateGame(game);
-            await displayAllGames();
-        } else {
-            alert("Please enter a valid number for stamina.");
-        }
-    }
-    
     if (editGame) {
-        editGame.addEventListener("click", () => prepareToUpdateGame(game.id));
+        editGame.addEventListener("click", () => handleGameEdit(game.id));
     }
 }
 
-function initAddTaskForm() {
-    let taskForm = document.getElementById("task-form");
+async function handleGameEdit(gameId) {
+    let game = await fetchGameById(gameId);
+
+    const currentStamina = parseInt(document.getElementById(`currentStamina${game.id}`).value, 10);
+    const pendingTask = document.getElementById(`pendingTask${gameId}`).value;
+
+    if (!isNaN(currentStamina)) {
+        game.currentStamina = currentStamina;
+        game.pendingTasks = pendingTask;
+        game.dateMaxStamina = calculateMaxStaminaDate(game);
+        game.maxStaminaAt = formatDateToDayHour(game.dateMaxStamina);
+        
+        await updateGame(game);
+        await displayAllGames();
+    } else {
+        alert("Please enter a valid number for stamina.");
+    }
+}
+
+function initializeTaskForm() {
+    const taskForm = document.getElementById("task-form");
     taskForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         
-        let selectGame = document.getElementById("gameId");
-        let gameId = parseInt(selectGame.value);
-        let gameDescription = selectGame.options[selectGame.selectedIndex].text;
+        const selectGame = document.getElementById("gameId");
+        const gameId = parseInt(selectGame.value);
+        const gameDescription = selectGame.options[selectGame.selectedIndex].text;
 
-        let taskDescription = document.getElementById("taskDescription").value;
-        let expirationDay = parseInt(document.getElementById("expirationDay").value) | 0;
-        let expirationHour = parseInt(document.getElementById("expirationHour").value) | 0;    
-        let expirationDate = getExpirationDate(expirationDay, expirationHour);
-        let refreshType = parseInt(document.getElementById("refreshType").value);
+        const taskDescription = document.getElementById("taskDescription").value;
+        const expirationDay = parseInt(document.getElementById("expirationDay").value) | 0;
+        const expirationHour = parseInt(document.getElementById("expirationHour").value) | 0;    
+        const expirationDate = getExpirationDate(expirationDay, expirationHour);
+        const refreshType = parseInt(document.getElementById("refreshType").value);
 
         let newTask = new Task(
             taskDescription,
@@ -139,8 +138,8 @@ function initAddTaskForm() {
 }
 
 async function displayAllTasks() {
-    var tasks = await fetchAllTasks();
-    let gameScheduleBody = document.getElementById("gameScheduleBody");
+    const tasks = await fetchAllTasks();
+    const gameScheduleBody = document.getElementById("gameScheduleBody");
     gameScheduleBody.innerHTML = ''; // clear data
 
     tasks.forEach(task => {
@@ -189,7 +188,7 @@ function addTaskEventListeners(task) {
     }
 }
 
-function initValidateNumberInput() {
+function initializeNumberInputValidation() {
     var inputValidateNumberInput = function(event) {
         validateNumberInput(event.target);
     };

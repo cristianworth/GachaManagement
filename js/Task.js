@@ -34,8 +34,9 @@ allTasks.push(new Task('Echo of War', new Date(2025, 2, 17, 6), RefreshTypeEnum.
 allTasks.push(new Task('Simulated Universe', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 2, "Honkai Star Rail"));
 
 allTasks.push(new Task('Tower of Adversity', new Date(2025, 2, 31, 6), RefreshTypeEnum.BuscaIdPorNome('FourWeeks'), 3, "Wuthering Waves"));
-allTasks.push(new Task('Whimpering Waves', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('BiMonthly'), 3, "Wuthering Waves"));
+allTasks.push(new Task('Whimpering Waves', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('FourWeeks'), 3, "Wuthering Waves"));
 allTasks.push(new Task('Illusive Realm', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 3, "Wuthering Waves"));
+allTasks.push(new Task('Weekly Boss', new Date(2025, 2, 17, 6), RefreshTypeEnum.BuscaIdPorNome('Weekly'), 3, "Wuthering Waves"));
 
 allTasks.push(new Task('Shiyu Defense', new Date(2025, 2, 28, 6), RefreshTypeEnum.BuscaIdPorNome('BiMonthly'), 4, "Zenless Zone Zero"));
 allTasks.push(new Task('Deadly Assault', new Date(2025, 2, 21, 6), RefreshTypeEnum.BuscaIdPorNome('TwoWeeks'), 4, "Zenless Zone Zero"));
