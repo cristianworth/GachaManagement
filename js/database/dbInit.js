@@ -1,4 +1,4 @@
-// database.js file
+// dbInit.js file
 import { populateInitialGames } from './gameDB.js'
 import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './taskDB.js'
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js'
@@ -40,9 +40,11 @@ export async function routineUpdateExpiratedTasks() {
         var daysToRefresh = RefreshTypeEnum.BuscaDiasPorId(task.refreshType);
         if (!daysToRefresh) return;
 
+        task.isDone = false;
         const expiratedDate = new Date(task.expirationDate);
         task.expirationDate.setDate(expiratedDate.getDate() + daysToRefresh);
         console.log(`updated ${task.gameDescription} expirated task ${task.description} from date ${formatDate(expiratedDate)} to ${formatDate(task.expirationDate)}`);
+        
         updateTask(task);
     });
 }
