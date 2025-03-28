@@ -1,3 +1,4 @@
+// tests\dateUtils.test.js
 import { calculateMaxStaminaDate } from '../js/utils/dateUtils.js';
 
 test('calculateMaxStaminaDate should return correct date', () => {

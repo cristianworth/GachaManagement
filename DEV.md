@@ -12,7 +12,7 @@
 
 ## 🛠️ Melhorias Planejadas (To-Do List)
 - [ ] Criar um histórico de alterações em tarefas/jogos
-- [ ] Criar testes automatizados para funcionalidades principais
+- [X] Criar testes de unidade/integração para funcionalidades principais
 - [ ] Melhorar a interface (CSS/UI/UX)
 - [ ] Implementar funcionalidade de edição com redirecionamento para uma nova página de formulário
 - [X] Reorganizar estrutura separando **Task** de **dbTask**

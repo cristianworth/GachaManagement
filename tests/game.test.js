@@ -1,3 +1,4 @@
+// tests\game.test.js
 import { Game } from '../js/data/Game.js';
 
 test('Game constructor should initialize properties correctly', () => {
