@@ -2,7 +2,7 @@
 import { populateInitialGames } from './gameDB.js'
 import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './taskDB.js'
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js'
-import { formatDate } from '../utils/dateUtils.js';
+import { formatDateForDisplay } from '../utils/dateUtils.js';
 
 const db = new Dexie("GachaManagement");
 
@@ -43,7 +43,7 @@ export async function routineUpdateExpiratedTasks() {
         task.isDone = false;
         const expiratedDate = new Date(task.expirationDate);
         task.expirationDate.setDate(expiratedDate.getDate() + daysToRefresh);
-        console.log(`updated ${task.gameDescription} expirated task ${task.description} from date ${formatDate(expiratedDate)} to ${formatDate(task.expirationDate)}`);
+        console.log(`updated ${task.gameDescription} expirated task ${task.description} from date ${formatDateForDisplay(expiratedDate)} to ${formatDateForDisplay(task.expirationDate)}`);
         
         updateTask(task);
     });
