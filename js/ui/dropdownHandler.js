@@ -1,3 +1,4 @@
+// js\ui\dropdownHandler.js
 import { fetchAllGames } from '../database/gameDB.js';
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js';
 

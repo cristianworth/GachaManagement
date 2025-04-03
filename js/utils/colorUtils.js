@@ -1,4 +1,4 @@
-// colorUtils.js
+// js\utils\colorUtils.js
 export function getRandomColor() {
     const colors = [
         "#d9d9d9", // Cinza Claro

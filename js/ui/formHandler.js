@@ -1,40 +1,18 @@
-import { Game } from '../data/Game.js';
-import { Task } from '../data/Task.js';
-import { getRandomColor } from '../utils/colorUtils.js';
-import { addGame } from '../database/gameDB.js';
-import { addTask, updateTask } from '../database/taskDB.js';
-import { displayAllGames } from './gameUI.js';
-import { displayAllTasks } from './taskUI.js';
-import { getExpirationDate } from '../utils/dateUtils.js';
+// js\ui\formHandler.js
+import { handleAddGame } from './gameUI.js';
+import { handleAddTask } from './taskUI.js';
 
 export function initializeGameForm() {
     const gameForm = document.getElementById("game-form");
     gameForm.addEventListener("submit", async function (e) {
         e.preventDefault();
-        
-        const gameDescription = document.getElementById("gameDescription").value;
-        const abbreviation = document.getElementById("abbreviation").value;
-        const capStamina = document.getElementById("capStamina").value;
-        const staminaPerMinute = document.getElementById("staminaPerMinute").value;
-
-        const newGame = new Game(
-            gameDescription, 
-            abbreviation, 
-            'img/default-icon.png',
-            capStamina,
-            staminaPerMinute,
-            getRandomColor()
-        );
-
-        await addGame(newGame);
-        displayAllGames();
-        clearFieldsFromGameForm();
+        await handleAddGame();
     });
 
     clearFieldsFromGameForm();
 }
 
-function clearFieldsFromGameForm() {
+export function clearFieldsFromGameForm() {
     document.getElementById("gameDescription").value = '';
     document.getElementById("abbreviation").value = '';
     document.getElementById("capStamina").value = 240;
@@ -45,49 +23,7 @@ export function initializeTaskForm() {
     const taskForm = document.getElementById("task-form");
     taskForm.addEventListener("submit", async function (e) {
         e.preventDefault();
-        
-        const selectGame = document.getElementById("gameId");
-        const gameId = parseInt(selectGame.value);
-        const gameDescription = selectGame.options[selectGame.selectedIndex].text;
-        const taskDescription = document.getElementById("taskDescription").value;
-        const refreshType = parseInt(document.getElementById("refreshType").value);
-
-        const hasDateSelector = document.getElementById("hasDateSelector").checked;
-        let expirationDate = new Date();
-        if (hasDateSelector) {
-            expirationDate = new Date(document.getElementById("expirationDate").value);
-        } else {
-            const expirationDay = parseInt(document.getElementById("expirationDay").value) | 0;
-            const expirationHour = parseInt(document.getElementById("expirationHour").value) | 0;    
-            expirationDate = getExpirationDate(expirationDay, expirationHour);
-        }
-
-        const taskId = parseInt(document.getElementById("taskId").value);
-        if (taskId) {
-            const updatedTask = new Task(
-                taskDescription,
-                expirationDate,
-                refreshType,
-                gameId,
-                gameDescription,
-                taskId,
-            );
-            
-            await updateTask(updatedTask);
-        } else {
-            const newTask = new Task(
-                taskDescription,
-                expirationDate,
-                refreshType,
-                gameId,
-                gameDescription,
-            );
-            
-            await addTask(newTask);
-        }
-
-        displayAllTasks();
-        clearFieldsFromTaskForm();
+        await handleAddTask();
     })
 
     clearFieldsFromTaskForm();

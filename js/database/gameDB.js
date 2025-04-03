@@ -1,5 +1,5 @@
 
-// gameDB.js file
+// js\database\gameDB.js
 import db from './dbInit.js'
 import { allGames } from '../data/Game.js'
 

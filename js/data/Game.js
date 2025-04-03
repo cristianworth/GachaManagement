@@ -1,4 +1,4 @@
-// Game.js file
+// js\data\Game.js
 export class Game {
     id;
     description;
@@ -12,13 +12,14 @@ export class Game {
     dateMaxStamina = new Date();
     pendingTasks = '';
 
-    constructor(description, abbreviation, img, capStamina, staminaPerMinute, color) {
+    constructor(description, abbreviation, img, capStamina, staminaPerMinute, color, id = undefined) {
         this.description = description;
         this.abbreviation = abbreviation;
         this.img = img;
         this.capStamina = capStamina;
         this.staminaPerMinute = staminaPerMinute;
         this.color = color;
+        this.id = id;
     }
 }
 

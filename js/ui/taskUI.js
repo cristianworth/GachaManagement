@@ -1,5 +1,7 @@
-import { fetchAllTasks, completeTask, fetchTaskById } from '../database/taskDB.js';
-import { formatDateForDisplay, formatDateForInput } from '../utils/dateUtils.js';
+// js\ui\taskUI.js
+import { Task } from '../data/Task.js';
+import { fetchAllTasks, completeTask, fetchTaskById, addTask, updateTask } from '../database/taskDB.js';
+import { formatDateForDisplay, formatDateForInput, getExpirationDate } from '../utils/dateUtils.js';
 import { setDateSelector } from './formHandler.js';
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js';
 
@@ -71,3 +73,49 @@ async function handleEditTask (id) {
         document.getElementById("refreshType").value = task.refreshType;
     }
 }    
+
+export async function handleAddTask() {
+    const selectGame = document.getElementById("gameId");
+    const gameId = parseInt(selectGame.value);
+    const gameDescription = selectGame.options[selectGame.selectedIndex].text;
+    const taskDescription = document.getElementById("taskDescription").value;
+    const refreshType = parseInt(document.getElementById("refreshType").value);
+
+    const hasDateSelector = document.getElementById("hasDateSelector").checked;
+    let expirationDate = new Date();
+    if (hasDateSelector) {
+        expirationDate = new Date(document.getElementById("expirationDate").value);
+    } else {
+        const expirationDay = parseInt(document.getElementById("expirationDay").value) | 0;
+        const expirationHour = parseInt(document.getElementById("expirationHour").value) | 0;    
+        expirationDate = getExpirationDate(expirationDay, expirationHour);
+    }
+
+    const taskId = parseInt(document.getElementById("taskId").value);
+    if (taskId) {
+        const updatedTask = new Task(
+            taskDescription,
+            expirationDate,
+            refreshType,
+            gameId,
+            gameDescription,
+            taskId,
+        );
+        
+        await updateTask(updatedTask);
+    } else {
+        const newTask = new Task(
+            taskDescription,
+            expirationDate,
+            refreshType,
+            gameId,
+            gameDescription,
+        );
+        
+        await addTask(newTask);
+    }
+
+    displayAllTasks();
+    clearFieldsFromTaskForm();
+}
+

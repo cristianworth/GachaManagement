@@ -1,4 +1,4 @@
-// RefreshTypeEnum.js file
+// js\enums\RefreshTypeEnum.js
 class RefreshTypeEnum {
     static values = [
         {id: 0, value: 'Event', days: null},

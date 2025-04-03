@@ -1,4 +1,4 @@
-// Task.js file
+// js\data\Task.js
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js'
 
 export class Task {

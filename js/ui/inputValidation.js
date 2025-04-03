@@ -1,3 +1,4 @@
+// js\ui\inputValidation.js
 import { validateNumberInput } from '../utils/validationUtils.js';
 
 export function initializeNumberInputValidation() {

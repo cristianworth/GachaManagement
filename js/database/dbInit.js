@@ -1,4 +1,4 @@
-// dbInit.js file
+// js\database\dbInit.js
 import { populateInitialGames } from './gameDB.js'
 import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './taskDB.js'
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js'
@@ -16,7 +16,6 @@ db.open().then(populateInitialData).catch((error) => {
 });
 
 export async function populateInitialData() {
-    console.log('Do something afeter open database.');
     await populateInitialGames();
     await populateInitialTasks();
     await routineUpdateExpiratedTasks();

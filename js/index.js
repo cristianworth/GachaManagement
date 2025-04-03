@@ -1,3 +1,4 @@
+// js\index.js
 import { initializeGameForm, initializeTaskForm } from './ui/formHandler.js';
 import { displayAllGames } from './ui/gameUI.js';
 import { displayAllTasks } from './ui/taskUI.js';

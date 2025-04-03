@@ -1,5 +1,9 @@
-import { fetchGameById, fetchAllGames, updateGame } from '../database/gameDB.js';
+// js\ui\gameUI.js
+import { Game } from '../data/Game.js';
+import { fetchGameById, fetchAllGames, updateGame, addGame } from '../database/gameDB.js';
 import { calculateMaxStaminaDate, formatDateToDayHour } from '../utils/dateUtils.js';
+import { clearFieldsFromGameForm } from './formHandler.js';
+import { getRandomColor } from '../utils/colorUtils.js';
 
 export async function displayAllGames() {
     const games = await fetchAllGames();
@@ -61,4 +65,24 @@ async function handleEditGame(gameId) {
     } else {
         alert("Please enter a valid number for stamina.");
     }
+}
+
+export async function handleAddGame() {
+    const gameDescription = document.getElementById("gameDescription").value;
+    const abbreviation = document.getElementById("abbreviation").value;
+    const capStamina = document.getElementById("capStamina").value;
+    const staminaPerMinute = document.getElementById("staminaPerMinute").value;
+
+    const newGame = new Game(
+        gameDescription, 
+        abbreviation, 
+        'img/default-icon.png',
+        capStamina,
+        staminaPerMinute,
+        getRandomColor()
+    );
+
+    await addGame(newGame);
+    displayAllGames();
+    clearFieldsFromGameForm();
 }
