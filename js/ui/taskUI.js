@@ -1,5 +1,6 @@
 import { fetchAllTasks, completeTask, fetchTaskById } from '../database/taskDB.js';
 import { formatDateForDisplay, formatDateForInput } from '../utils/dateUtils.js';
+import { setDateSelector } from './formHandler.js';
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js';
 
 export async function displayAllTasks() {
@@ -58,12 +59,14 @@ async function handleEditTask (id) {
     const task = await fetchTaskById(id);
 
     if (task) {
+        document.getElementById("submitTaskForm").textContent = "Update Task";
+        document.getElementById("taskId").value = task.id;
         document.getElementById("gameId").value = task.gameId;
 
         document.getElementById("taskDescription").value = task.description;
         document.getElementById("expirationDay").value = 0;
         document.getElementById("expirationHour").value = 0;
-
+        setDateSelector(true);
         document.getElementById("expirationDate").value = formatDateForInput(task.expirationDate);
         document.getElementById("refreshType").value = task.refreshType;
     }

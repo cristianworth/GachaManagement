@@ -81,6 +81,9 @@
     <section>
         <h1 class="main-title">Gacha Schedule</h1>
         <form id="task-form">
+            <label for="taskId" hidden>Id:</label>
+            <input id="taskId" type="number" hidden></input>
+            
             <label for="gameId">Game:</label>
             <select id="gameId"></select>
             
@@ -108,7 +111,7 @@
             <label for="refreshType">Refresh Type:</label>
             <select id="refreshType"></select>
             
-            <button>Add Task</button>
+            <button id="submitTaskForm">Add Task</button>
         </form>
         <table id="gameSchedule">
             <thead>

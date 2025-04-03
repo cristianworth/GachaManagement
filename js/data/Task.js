@@ -11,12 +11,13 @@ export class Task {
     gameDescription;
     game;
 
-    constructor(description, expirationDate, refreshType, gameId, gameDescription) {
+    constructor(description, expirationDate, refreshType, gameId, gameDescription, id = undefined) {
         this.description = description;
         this.expirationDate = expirationDate;
         this.refreshType = refreshType;
         this.gameId = gameId;
         this.gameDescription = gameDescription;
+        this.id = id;
     }
 }
 
