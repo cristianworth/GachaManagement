@@ -1,5 +1,5 @@
-// colorUtils.js
-export default function getRandomColor() {
+// js\utils\colorUtils.js
+export function getRandomColor() {
     const colors = [
         "#d9d9d9", // Cinza Claro
         "#f2e6d9", // Bege Claro

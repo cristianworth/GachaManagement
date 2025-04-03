@@ -1,23 +1,44 @@
-<!-- index.html file -->
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="img/favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Game precisa ser referenciado primeiro, pq ele é usado pelo index. A ORDEM IMPORTA AQUI -->
-    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
-    <script type="module" src="js/enums/RefreshTypeEnum.js"></script> 
-    <script type="module" src="js/utils/dateUtils.js"></script> 
-    <script type="module" src="js/utils/colorUtils.js"></script> 
-    <script type="module" src="js/database.js"></script> 
-    <script type="module" src="js/Game.js"></script> 
-    <script type="module" src="js/Task.js"></script> 
-    <script type="module" src="js/index.js"></script> 
-    <title>Gacha Management</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" href="img/favicon.ico">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+        <link rel="stylesheet" href="css/styles.css">
+        
+        <!-- External Library -->
+        <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    
+        <!-- Utility Scripts -->
+        <script type="module" src="js/enums/RefreshTypeEnum.js"></script> 
+        <script type="module" src="js/utils/dateUtils.js"></script> 
+        <script type="module" src="js/utils/colorUtils.js"></script> 
+        <script type="module" src="js/utils/validationUtils.js"></script> 
+    
+        <!-- Database Initialization -->
+        <script type="module" src="js/database/dbInit.js"></script> 
+        <script type="module" src="js/database/gameDB.js"></script> 
+        <script type="module" src="js/database/taskDB.js"></script> 
+    
+        <!-- Data Models -->
+        <script type="module" src="js/data/Game.js"></script> 
+        <script type="module" src="js/data/Task.js"></script> 
+    
+        <!-- UI Scripts (Newly Added) -->
+        <script type="module" src="js/ui/gameUI.js"></script>
+        <script type="module" src="js/ui/taskUI.js"></script>
+        <script type="module" src="js/ui/formHandler.js"></script>
+        <script type="module" src="js/ui/dropdownHandler.js"></script>
+        <script type="module" src="js/ui/inputValidation.js"></script>
+    
+        <!-- Main Script -->
+        <script type="module" src="js/index.js"></script> 
+    
+        <title>Gacha Management</title>
+    </head>
+    
 <body>
     <section>
         <h1 class="main-title">
@@ -60,22 +81,37 @@
     <section>
         <h1 class="main-title">Gacha Schedule</h1>
         <form id="task-form">
+            <label for="taskId" hidden>Id:</label>
+            <input id="taskId" type="number" hidden></input>
+            
             <label for="gameId">Game:</label>
             <select id="gameId"></select>
             
             <label for="taskDescription">Task:</label>
             <input id="taskDescription" type="text" required/>
+            
+            <label for="hasDateSelector">Use Date Selector:</label>
+            <input id="hasDateSelector" type="checkbox">
 
-            <label for="expirationDay">Expiration Day:</label>
-            <input id="expirationDay" type="number" value="0" required/>
-        
-            <label for="expirationHour">Expiration Hour:</label>
-            <input id="expirationHour" type="number" value="0" required/>
+            <br/>
+
+            <div id="divExpirationDayAndHour">
+                <label for="expirationDay">Expiration Day:</label>
+                <input id="expirationDay" type="number" value="0" required/>
+            
+                <label for="expirationHour">Expiration Hour:</label>
+                <input id="expirationHour" type="number" value="0" required/>    
+            </div>
+
+            <div id="divExpirationDate" hidden>
+                <label for="expirationDate">Date:</label>
+                <input id="expirationDate" type="datetime-local"/>    
+            </div>
 
             <label for="refreshType">Refresh Type:</label>
             <select id="refreshType"></select>
             
-            <button>Add Task</button>
+            <button id="submitTaskForm">Add Task</button>
         </form>
         <table id="gameSchedule">
             <thead>

@@ -1,8 +1,8 @@
-// database.js file
-import { populateInitialGames } from './Game.js'
-import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './Task.js'
-import RefreshTypeEnum from './enums/RefreshTypeEnum.js'
-import { formatDate } from './utils/dateUtils.js';
+// js\database\dbInit.js
+import { populateInitialGames } from './gameDB.js'
+import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './taskDB.js'
+import RefreshTypeEnum from '../enums/RefreshTypeEnum.js'
+import { formatDateForDisplay } from '../utils/dateUtils.js';
 
 const db = new Dexie("GachaManagement");
 
@@ -16,7 +16,6 @@ db.open().then(populateInitialData).catch((error) => {
 });
 
 export async function populateInitialData() {
-    console.log('Do something afeter open database.');
     await populateInitialGames();
     await populateInitialTasks();
     await routineUpdateExpiratedTasks();
@@ -40,9 +39,11 @@ export async function routineUpdateExpiratedTasks() {
         var daysToRefresh = RefreshTypeEnum.BuscaDiasPorId(task.refreshType);
         if (!daysToRefresh) return;
 
+        task.isDone = false;
         const expiratedDate = new Date(task.expirationDate);
         task.expirationDate.setDate(expiratedDate.getDate() + daysToRefresh);
-        console.log(`updated ${task.gameDescription} expirated task ${task.description} from date ${formatDate(expiratedDate)} to ${formatDate(task.expirationDate)}`);
+        console.log(`updated ${task.gameDescription} expirated task ${task.description} from date ${formatDateForDisplay(expiratedDate)} to ${formatDateForDisplay(task.expirationDate)}`);
+        
         updateTask(task);
     });
 }
