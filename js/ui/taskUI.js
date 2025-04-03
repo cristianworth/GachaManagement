@@ -36,7 +36,7 @@ function createTaskRow(task) {
     return row;
 }
 
-export function addTaskEventListeners(task) {
+function addTaskEventListeners(task) {
     const checkbox = document.getElementById(`task-checkbox-${task.id}`);
     const editButton = document.getElementById(`edit-task-${task.id}`);
 

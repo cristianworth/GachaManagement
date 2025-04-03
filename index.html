@@ -86,15 +86,24 @@
             
             <label for="taskDescription">Task:</label>
             <input id="taskDescription" type="text" required/>
+            
+            <label for="hasDateSelector">Use Date Selector:</label>
+            <input id="hasDateSelector" type="checkbox">
 
-            <label for="expirationDay">Expiration Day:</label>
-            <input id="expirationDay" type="number" value="0" required/>
-        
-            <label for="expirationHour">Expiration Hour:</label>
-            <input id="expirationHour" type="number" value="0" required/>
+            <br/>
 
-            <label for="expirationDate">Date:</label>
-            <input id="expirationDate" type="datetime-local"/>
+            <div id="divExpirationDayAndHour">
+                <label for="expirationDay">Expiration Day:</label>
+                <input id="expirationDay" type="number" value="0" required/>
+            
+                <label for="expirationHour">Expiration Hour:</label>
+                <input id="expirationHour" type="number" value="0" required/>    
+            </div>
+
+            <div id="divExpirationDate" hidden>
+                <label for="expirationDate">Date:</label>
+                <input id="expirationDate" type="datetime-local"/>    
+            </div>
 
             <label for="refreshType">Refresh Type:</label>
             <select id="refreshType"></select>

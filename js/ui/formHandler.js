@@ -29,6 +29,15 @@ export function initializeGameForm() {
         await addGame(newGame);
         displayAllGames();
     });
+
+    clearFieldsFromGameForm();
+}
+
+function clearFieldsFromGameForm() {
+    document.getElementById("gameDescription").value = '';
+    document.getElementById("abbreviation").value = '';
+    document.getElementById("capStamina").value = 240;
+    document.getElementById("staminaPerMinute").value = 6;
 }
 
 export function initializeTaskForm() {
@@ -57,4 +66,31 @@ export function initializeTaskForm() {
         await addTask(newTask);
         displayAllTasks();
     })
+
+    clearFieldsFromTaskForm()
+
+    const hasDateSelector = document.getElementById("hasDateSelector");
+
+    if (hasDateSelector) {
+        hasDateSelector.addEventListener("change", () => handleDateSelector(hasDateSelector.checked));
+    }
+}
+
+function clearFieldsFromTaskForm() {
+    document.getElementById("taskDescription").value = '';
+    document.getElementById("expirationDay").value = 0;
+    document.getElementById("expirationHour").value = 0;
+    document.getElementById("expirationDate").value = '';
+    document.getElementById("hasDateSelector").checked = false;
+    handleDateSelector(false);
+}
+
+function handleDateSelector(hasDateSelector) {
+    if (hasDateSelector) {
+        document.getElementById("divExpirationDate").hidden = false;
+        document.getElementById("divExpirationDayAndHour").hidden = true;
+    } else {
+        document.getElementById("divExpirationDate").hidden = true;
+        document.getElementById("divExpirationDayAndHour").hidden = false;
+    }
 }
