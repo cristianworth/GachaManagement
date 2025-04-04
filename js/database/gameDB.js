@@ -26,12 +26,6 @@ export async function updateGame(game) {
 }
 
 export async function deleteGameById(gameId) {
-    // Not really used at the moment but can be used to update an existing Game, 
-    //      delet it and then when the pages reload the populateInitialData will create it again
-    // Examples:
-    // deleteGameById(2);
-    // deleteGameById(6);
-    // deleteGameById(7);
     try {
         const gameFound = await fetchGameById(gameId);
 

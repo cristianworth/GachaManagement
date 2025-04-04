@@ -4,11 +4,11 @@
 ### 📝 Tarefas
 - [X] Atualização do status de concluído (Is Done)
 - [X] Criação de novas tarefas
-- [ ] Edição de tarefas
+- [X] Edição de tarefas
 
 ### 🎮 Jogos
-- [ ] Atualização da stamina (Editar Jogo)
-- [ ] Criação de um novo jogo
+- [X] Atualização da stamina (Editar Jogo)
+- [X] Criação de um novo jogo
 
 ## 🛠️ Melhorias Planejadas (To-Do List)
 - [ ] Criar um histórico de alterações em tarefas/jogos
@@ -19,7 +19,7 @@
 - [ ] Adicionar mensagens de confirmação ao concluir uma operação
 - [ ] Reordenar as tarefas concluídas para o final da lista
 - [ ] Criar um filtro por tipo de evento (Diário, Semanal, etc.) e jogo
-- [ ] Limpar os formulários após adicionar uma nova tarefa/jogo
+- [X] Limpar os formulários após adicionar uma nova tarefa/jogo
 
 ## 🐛 Correções de Bug Pendentes
 - [ ] A primeira vez que a página é carregada fica em branco (deve esperar o carregamento dos dados)

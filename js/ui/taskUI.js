@@ -1,7 +1,8 @@
 // js\ui\taskUI.js
 import { Task } from '../data/Task.js';
-import { fetchAllTasks, completeTask, fetchTaskById, addTask, updateTask } from '../database/taskDB.js';
+import { fetchAllTasks, completeTask, fetchTaskById, addTask, updateTask, deleteTaskById } from '../database/taskDB.js';
 import { formatDateForDisplay, formatDateForInput, getExpirationDate } from '../utils/dateUtils.js';
+import { clearFieldsFromTaskForm } from './formHandler.js'
 import { setDateSelector } from './formHandler.js';
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js';
 
@@ -33,6 +34,7 @@ function createTaskRow(task) {
         <td>${formatDateForDisplay(task.expirationDate)}</td>
         <td>
             <button class="spacing-left" id="edit-task-${task.id}">Edit</button>
+            <button class="spacing-left" id="delete-task-${task.id}">Delete</button>
         </td>
     `;
 
@@ -42,23 +44,25 @@ function createTaskRow(task) {
 function addTaskEventListeners(task) {
     const checkbox = document.getElementById(`task-checkbox-${task.id}`);
     const editButton = document.getElementById(`edit-task-${task.id}`);
+    const deleteButton = document.getElementById(`delete-task-${task.id}`);
 
-    if (checkbox) {
+    if (checkbox) 
         checkbox.addEventListener("change", () => handleTaskCompletion(task.id, checkbox.checked))
-    }
  
-    if (editButton) {
+    if (editButton)
         editButton.addEventListener("click", () => handleEditTask(task.id))
-    }
+
+    if (deleteButton) 
+        deleteButton.addEventListener("click", () => handleDelete(task.id))
 }
 
-async function handleTaskCompletion(id, value) {
-    await completeTask(id, value);
+async function handleTaskCompletion(taskId, value) {
+    await completeTask(taskId, value);
     await displayAllTasks();
 }    
 
-async function handleEditTask (id) {
-    const task = await fetchTaskById(id);
+async function handleEditTask (taskId) {
+    const task = await fetchTaskById(taskId);
 
     if (task) {
         document.getElementById("submitTaskForm").textContent = "Update Task";
@@ -73,6 +77,11 @@ async function handleEditTask (id) {
         document.getElementById("refreshType").value = task.refreshType;
     }
 }    
+
+async function handleDelete(taskId) {
+    await deleteTaskById(taskId);
+    await displayAllTasks();
+}
 
 export async function handleAddTask() {
     const selectGame = document.getElementById("gameId");
