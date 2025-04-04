@@ -1,6 +1,6 @@
 // js\ui\gameUI.js
 import { Game } from '../data/Game.js';
-import { fetchGameById, fetchAllGames, updateGame, addGame } from '../database/gameDB.js';
+import { fetchGameById, fetchAllGames, updateGame, addGame, deleteGameById } from '../database/gameDB.js';
 import { calculateMaxStaminaDate, formatDateToDayHour } from '../utils/dateUtils.js';
 import { clearFieldsFromGameForm } from './formHandler.js';
 import { getRandomColor } from '../utils/colorUtils.js';
@@ -35,6 +35,9 @@ function createGameRow(game) {
         <td>
             <span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${game.maxStaminaAt}<\span>
         </td>
+        <td>
+            <button class="spacing-left" id="delete-game-${game.id}">Delete</button>
+        </td>
     `;
 
     return row;
@@ -42,10 +45,13 @@ function createGameRow(game) {
 
 export function addGameEventListeners(game) {
     const editGame = document.getElementById(`edit-game-${game.id}`);
+    const deleteGame = document.getElementById(`delete-game-${game.id}`);
 
-    if (editGame) {
+    if (editGame)
         editGame.addEventListener("click", () => handleEditGame(game.id));
-    }
+    
+    if (deleteGame)     
+        deleteGame.addEventListener("click", () => handleDelete(game.id))
 }
 
 async function handleEditGame(gameId) {
@@ -65,6 +71,11 @@ async function handleEditGame(gameId) {
     } else {
         alert("Please enter a valid number for stamina.");
     }
+}
+
+async function handleDelete(gameId) {
+    await deleteGameById(gameId);
+    await displayAllGames();
 }
 
 export async function handleAddGame() {

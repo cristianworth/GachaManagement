@@ -27,11 +27,6 @@ export async function updateTask(task) {
 }
 
 export async function deleteTaskById(taskId) {
-    // Not really used at the moment but can be used to update an existing Game, 
-    //      delet it and then when the pages reload the populateInitialData will create it again
-    // Examples:
-    // deleteTaskById(1);
-    // deleteTaskById(2);
     try {
         const taskFound = await fetchTaskById(taskId);
 

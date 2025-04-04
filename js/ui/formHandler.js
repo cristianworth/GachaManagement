@@ -35,7 +35,7 @@ export function initializeTaskForm() {
     }
 }
 
-function clearFieldsFromTaskForm() {
+export function clearFieldsFromTaskForm() {
     document.getElementById("submitTaskForm").textContent = "Add Task";
     document.getElementById("taskId").value = '';
     document.getElementById("taskDescription").value = '';
