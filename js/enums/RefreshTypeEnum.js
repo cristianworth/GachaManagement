@@ -11,34 +11,34 @@ class RefreshTypeEnum {
         {id: 7, value: 'SixWeeks', days: 42},
     ];
 
-    static BuscaIdPorNome(nome) {
-        let enumEncontrado = this.values.find(x => x.value == nome);
+    static findIdByName(name) {
+        let foundEnum = this.values.find(x => x.value == name);
 
-        if (enumEncontrado)
+        if (foundEnum)
         {
-            return enumEncontrado.id;
+            return foundEnum.id;
         }
 
         return null;
     }
 
-    static BuscaNomePorId(id) {
-        let enumEncontrado = this.values.find(x => x.id == id);
+    static findNameById(id) {
+        let foundEnum = this.values.find(x => x.id == id);
 
-        if (enumEncontrado)
+        if (foundEnum)
         {
-            return enumEncontrado.value;
+            return foundEnum.value;
         }
 
         return null;
     }
     
-    static BuscaDiasPorId(id) {
-        let enumEncontrado = this.values.find(x => x.id == id);
+    static findDaysById(id) {
+        let foundEnum = this.values.find(x => x.id == id);
 
-        if (enumEncontrado)
+        if (foundEnum)
         {
-            return enumEncontrado.days;
+            return foundEnum.days;
         }
 
         return null;

@@ -112,7 +112,7 @@ export async function hasAnyTask() {
     }
 }
 
-export async function fetchAllExpiredTasks() {
+export async function fetchAllOverdueTasks() {
     try {
         const now = new Date();
         const tasks = await db.tasks.where("expirationDate").belowOrEqual(now).toArray();

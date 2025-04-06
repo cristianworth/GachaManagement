@@ -9,10 +9,10 @@ export function initializeGameForm() {
         await handleAddGame();
     });
 
-    clearFieldsFromGameForm();
+    resetGameForm();
 }
 
-export function clearFieldsFromGameForm() {
+export function resetGameForm() {
     document.getElementById("gameDescription").value = '';
     document.getElementById("abbreviation").value = '';
     document.getElementById("capStamina").value = 240;
@@ -26,7 +26,7 @@ export function initializeTaskForm() {
         await handleAddTask();
     })
 
-    clearFieldsFromTaskForm();
+    resetTaskForm();
 
     const hasDateSelector = document.getElementById("hasDateSelector");
 
@@ -35,7 +35,7 @@ export function initializeTaskForm() {
     }
 }
 
-export function clearFieldsFromTaskForm() {
+export function resetTaskForm() {
     document.getElementById("submitTaskForm").textContent = "Add Task";
     document.getElementById("taskId").value = '';
     document.getElementById("taskDescription").value = '';

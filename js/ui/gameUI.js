@@ -2,7 +2,7 @@
 import { Game } from '../data/Game.js';
 import { fetchGameById, fetchAllGames, updateGame, addGame, deleteGameById } from '../database/gameDB.js';
 import { calculateMaxStaminaDate, formatDateToDayHour } from '../utils/dateUtils.js';
-import { clearFieldsFromGameForm } from './formHandler.js';
+import { resetGameForm } from './formHandler.js';
 import { getRandomColor } from '../utils/colorUtils.js';
 
 export async function displayAllGames() {
@@ -48,13 +48,13 @@ export function addGameEventListeners(game) {
     const deleteGame = document.getElementById(`delete-game-${game.id}`);
 
     if (editGame)
-        editGame.addEventListener("click", () => handleEditGame(game.id));
+        editGame.addEventListener("click", () => handleGameEdit(game.id));
     
     if (deleteGame)     
         deleteGame.addEventListener("click", () => handleDelete(game.id))
 }
 
-async function handleEditGame(gameId) {
+async function handleGameEdit(gameId) {
     let game = await fetchGameById(gameId);
 
     const currentStamina = parseInt(document.getElementById(`currentStamina${game.id}`).value, 10);
@@ -95,5 +95,5 @@ export async function handleAddGame() {
 
     await addGame(newGame);
     displayAllGames();
-    clearFieldsFromGameForm();
+    resetGameForm();
 }

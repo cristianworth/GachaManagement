@@ -1,6 +1,6 @@
 // js\database\dbInit.js
 import { populateInitialGames } from './gameDB.js'
-import { updateTask, populateInitialTasks, fetchAllExpiredTasks } from './taskDB.js'
+import { updateTask, populateInitialTasks, fetchAllOverdueTasks } from './taskDB.js'
 import { displayAllTasks } from '../ui/taskUI.js'
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js'
 import { formatDateForDisplay } from '../utils/dateUtils.js';
@@ -19,7 +19,7 @@ db.open().then(populateInitialData).catch((error) => {
 export async function populateInitialData() {
     await populateInitialGames();
     await populateInitialTasks();
-    await routineUpdateExpiratedTasks();
+    await updateExpiratedTasksRoutine();
 }
 
 export async function clearDatabase() {
@@ -33,12 +33,12 @@ export async function clearDatabase() {
     }
 }
 
-export async function routineUpdateExpiratedTasks() {
-    var expiredTasks = await fetchAllExpiredTasks();
+export async function updateExpiratedTasksRoutine() {
+    var expiredTasks = await fetchAllOverdueTasks();
 
     if (expiredTasks) {     
         expiredTasks.forEach(task => {
-            var daysToRefresh = RefreshTypeEnum.BuscaDiasPorId(task.refreshType);
+            var daysToRefresh = RefreshTypeEnum.findDaysById(task.refreshType);
             if (!daysToRefresh) return;
         
             task.isDone = false;
