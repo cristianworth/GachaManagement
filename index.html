@@ -1,139 +1,152 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/png" href="img/favicon.ico">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-        <link rel="stylesheet" href="css/styles.css">
-        
-        <!-- External Library -->
-        <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
     
-        <!-- Utility Scripts -->
-        <script type="module" src="js/enums/RefreshTypeEnum.js"></script> 
-        <script type="module" src="js/utils/dateUtils.js"></script> 
-        <script type="module" src="js/utils/colorUtils.js"></script> 
-        <script type="module" src="js/utils/validationUtils.js"></script> 
-    
-        <!-- Database Initialization -->
-        <script type="module" src="js/database/dbInit.js"></script> 
-        <script type="module" src="js/database/gameDB.js"></script> 
-        <script type="module" src="js/database/taskDB.js"></script> 
-    
-        <!-- Data Models -->
-        <script type="module" src="js/data/Game.js"></script> 
-        <script type="module" src="js/data/Task.js"></script> 
-    
-        <!-- UI Scripts (Newly Added) -->
-        <script type="module" src="js/ui/gameUI.js"></script>
-        <script type="module" src="js/ui/taskUI.js"></script>
-        <script type="module" src="js/ui/formHandler.js"></script>
-        <script type="module" src="js/ui/dropdownHandler.js"></script>
-        <script type="module" src="js/ui/inputValidation.js"></script>
-    
-        <!-- Main Script -->
-        <script type="module" src="js/index.js"></script> 
-    
-        <title>Gacha Management</title>
-    </head>
+    <!-- External Library -->
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+
+    <!-- Utility Scripts -->
+    <script type="module" src="js/enums/RefreshTypeEnum.js"></script> 
+    <script type="module" src="js/utils/dateUtils.js"></script> 
+    <script type="module" src="js/utils/colorUtils.js"></script> 
+    <script type="module" src="js/utils/validationUtils.js"></script> 
+    <script type="module" src="js/utils/router.js"></script>
+
+    <!-- Database Initialization -->
+    <script type="module" src="js/database/dbInit.js"></script> 
+    <script type="module" src="js/database/gameDB.js"></script> 
+    <script type="module" src="js/database/taskDB.js"></script> 
+
+    <!-- Data Models -->
+    <script type="module" src="js/data/Game.js"></script> 
+    <script type="module" src="js/data/Task.js"></script> 
+
+    <!-- UI Scripts -->
+    <script type="module" src="js/ui/gameUI.js"></script>
+    <script type="module" src="js/ui/taskUI.js"></script>
+    <script type="module" src="js/ui/formHandler.js"></script>
+    <script type="module" src="js/ui/dropdownHandler.js"></script>
+    <script type="module" src="js/ui/inputValidation.js"></script>
+
+    <!-- Main Script -->
+    <script type="module" src="js/index.js"></script> 
+
+    <title>Gacha Management</title>
+</head>
     
 <body>
-    <section>
-        <h1 class="main-title">
-            <a href="https://cristianworth.github.io/GachaManagement/" target="_blank">Gacha Management</a>
-            <br>
-            <a href="https://github.com/cristianworth/GachaManagement/tree/dev" target="_blank">Dev Repo</a>
-        </h1>
-        
-        <form id="game-form">
-            <label for="gameDescription">Name of the game:</label>
-            <input id="gameDescription" type="text" required/>
+    <!-- Home Page (Games) -->
+    <div data-page="home">
+        <section id="game-section">
+            <h1 class="main-title">
+                <a href="https://cristianworth.github.io/GachaManagement/" target="_blank">Gacha Management</a>
+                <br>
+                <a href="https://github.com/cristianworth/GachaManagement/tree/dev" target="_blank">Dev Repo</a>
+            </h1>
             
-            <label for="abbreviation">Abbreviation:</label>
-            <input id="abbreviation" type="text" required/>
+            <form id="game-form">
+                <label for="gameDescription">Name of the game:</label>
+                <input id="gameDescription" type="text" required/>
+                
+                <label for="abbreviation">Abbreviation:</label>
+                <input id="abbreviation" type="text" required/>
+                
+                <label for="capStamina">Cap Stamina:</label>
+                <input id="capStamina" value="240" type="text" required/>
+                
+                <label for="staminaPerMinute">Stamina p/ Minute:</label>
+                <input id="staminaPerMinute" value="6" type="text" required/>
+                
+                <button type="submit">Add Game</button>
+            </form>
             
-            <label for="capStamina">Cap Stamina:</label>
-            <input id="capStamina" value="240" type="text" required/>
+            <table id="gameList">
+                <thead>
+                    <tr>
+                        <th>Icon</th>
+                        <th>Game</th>
+                        <th>To-do</th>
+                        <th>Stamina</th>
+                        <th>Max Stamina At</th>
+                    </tr>
+                </thead>
+                <tbody id="gameListBody">
+                    <!-- Data will be populated automatically -->
+                </tbody>
+            </table>
             
-            <label for="staminaPerMinute">Stamina p/ Minute:</label>
-            <input id="staminaPerMinute" value="6" type="text" required/>
-            
-            <button type="submit">Add Game</button>
-        </form>
-        <table id="gameList">
-            <thead>
-                <tr>
-                    <th>Icon</th>
-                    <th>Game</th>
-                    <th>To-do</th>
-                    <th>Stamina</th>
-                    <th>Max Stamina At</th>
-                </tr>
-            </thead>
-            <tbody id="gameListBody">
-                <!-- Dados vão ser preenchidos automaticamente com os dados populados no game.js -->
-            </tbody>
-        </table>
-    </section>
-    <section>
-        <h1 class="main-title">Gacha Schedule</h1>
-        <form id="task-form">
-            <label for="taskId" hidden>Id:</label>
-            <input id="taskId" type="number" hidden></input>
-            
-            <label for="gameId">Game:</label>
-            <select id="gameId"></select>
-            
-            <label for="taskDescription">Task:</label>
-            <input id="taskDescription" type="text" required/>
-            
-            <label for="hasDateSelector">Use Date Selector:</label>
-            <input id="hasDateSelector" type="checkbox">
+            <button id="viewTasksBtn">View Tasks</button>
+        </section>
+    </div>
 
-            <br/>
-
-            <div id="divExpirationDayAndHour">
-                <label for="expirationDay">Expiration Day:</label>
-                <input id="expirationDay" type="number" value="0" required/>
+    <!-- Task List Page -->
+    <div data-page="taskList" style="display:none">
+        <section id="task-section">
+            <h1 class="main-title">Gacha Schedule</h1>
+            <button id="createTaskBtn">Create New Task</button>
             
-                <label for="expirationHour">Expiration Hour:</label>
-                <input id="expirationHour" type="number" value="0" required/>    
-            </div>
+            <table id="gameSchedule">
+                <thead>
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>Done?</th>
+                        <th>Game</th>
+                        <th>Task</th>
+                        <th>Refresh Type</th>
+                        <th>Ending Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="gameScheduleBody">
+                    <!-- Data will be populated automatically -->
+                </tbody>
+            </table>
+        </section>
+    </div>
 
-            <div id="divExpirationDate" hidden>
-                <label for="expirationDate">Date:</label>
-                <input id="expirationDate" type="datetime-local"/>    
-            </div>
-
-            <label for="refreshType">Refresh Type:</label>
-            <select id="refreshType"></select>
+    <!-- Task Form Page -->
+    <div data-page="taskForm" style="display:none">
+        <section>
+            <h1 class="main-title">Create/Edit Task</h1>
+            <button id="backToListBtn">Back to List</button>
             
-            <button id="submitTaskForm">Add Task</button>
-        </form>
-        <table id="gameSchedule">
-            <thead>
-                <tr>
-                    <th hidden>ID</th>
-                    <th>Done?</th>
-                    <th>Game</th>
-                    <th>Task</th>
-                    <th>Refresh Type</th>
-                    <th>Ending Date</th>
-                </tr>
-            </thead>
-            <tbody id="gameScheduleBody">
-                <tr>
-                    <td hidden>1</td>
-                    <td><input type="checkbox" id="task1" value="checkboxTask1"></td>
-                    <td>ZZZ</td>
-                    <td>Shiyu Defense</td>
-                    <td>Monthly</td>
-                    <td>31/07/2024</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+            <form id="task-form">
+                <label for="taskId" hidden>Id:</label>
+                <input id="taskId" type="number" hidden>
+                
+                <label for="gameId">Game:</label>
+                <select id="gameId"></select>
+                
+                <label for="taskDescription">Task:</label>
+                <input id="taskDescription" type="text" required/>
+                
+                <label for="hasDateSelector">Use Date Selector:</label>
+                <input id="hasDateSelector" type="checkbox">
+
+                <div id="divExpirationDayAndHour">
+                    <label for="expirationDay">Expiration Day:</label>
+                    <input id="expirationDay" type="number" value="0" required/>
+                
+                    <label for="expirationHour">Expiration Hour:</label>
+                    <input id="expirationHour" type="number" value="0" required/>    
+                </div>
+
+                <div id="divExpirationDate" hidden>
+                    <label for="expirationDate">Date:</label>
+                    <input id="expirationDate" type="datetime-local"/>    
+                </div>
+
+                <label for="refreshType">Refresh Type:</label>
+                <select id="refreshType"></select>
+                
+                <button id="submitTaskForm" type="submit">Save Task</button>
+            </form>
+        </section>
+    </div>
 </body>
 </html>

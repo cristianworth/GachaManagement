@@ -1,6 +1,7 @@
 // js\ui\formHandler.js
 import { handleAddGame } from './gameUI.js';
 import { handleAddTask } from './taskUI.js';
+import Router from '../utils/router.js';
 
 export function initializeGameForm() {
     const gameForm = document.getElementById("game-form");
@@ -24,6 +25,7 @@ export function initializeTaskForm() {
     taskForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         await handleAddTask();
+        Router.navigateTo('/tasks');
     })
 
     resetTaskForm();
