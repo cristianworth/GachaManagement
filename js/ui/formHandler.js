@@ -8,6 +8,7 @@ export function initializeGameForm() {
     gameForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         await handleAddGame();
+        Router.navigateTo('/');
     });
 
     resetGameForm();

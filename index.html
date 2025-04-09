@@ -48,23 +48,8 @@
                 <br>
                 <a href="https://github.com/cristianworth/GachaManagement/tree/dev" target="_blank">Dev Repo</a>
             </h1>
-            
-            <form id="game-form">
-                <label for="gameDescription">Name of the game:</label>
-                <input id="gameDescription" type="text" required/>
-                
-                <label for="abbreviation">Abbreviation:</label>
-                <input id="abbreviation" type="text" required/>
-                
-                <label for="capStamina">Cap Stamina:</label>
-                <input id="capStamina" value="240" type="text" required/>
-                
-                <label for="staminaPerMinute">Stamina p/ Minute:</label>
-                <input id="staminaPerMinute" value="6" type="text" required/>
-                
-                <button type="submit">Add Game</button>
-            </form>
-            
+
+            <button id="createGameBtn">Create New Game</button>
             <table id="gameList">
                 <thead>
                     <tr>
@@ -84,10 +69,34 @@
         </section>
     </div>
 
+    <div data-page="gameForm" style="display: none;">
+        <section>
+            <h1 class="main-title">Create/Edit Game</h1>
+            <button id="backToGameListFromGameBtn">Back to Game List</button>
+
+            <form id="game-form">
+                <label for="gameDescription">Name of the game:</label>
+                <input id="gameDescription" type="text" required/>
+                
+                <label for="abbreviation">Abbreviation:</label>
+                <input id="abbreviation" type="text" required/>
+                
+                <label for="capStamina">Cap Stamina:</label>
+                <input id="capStamina" value="240" type="text" required/>
+                
+                <label for="staminaPerMinute">Stamina p/ Minute:</label>
+                <input id="staminaPerMinute" value="6" type="text" required/>
+                
+                <button type="submit">Add Game</button>
+            </form>
+        </section>
+    </div>
+
     <!-- Task List Page -->
     <div data-page="taskList" style="display:none">
         <section id="task-section">
             <h1 class="main-title">Gacha Schedule</h1>
+            <button id="backToGameListFromTaskBtn">Back to Game List</button>
             <button id="createTaskBtn">Create New Task</button>
             
             <table id="gameSchedule">
@@ -113,7 +122,7 @@
     <div data-page="taskForm" style="display:none">
         <section>
             <h1 class="main-title">Create/Edit Task</h1>
-            <button id="backToListBtn">Back to List</button>
+            <button id="backToTaskListBtn">Back to Task List</button>
             
             <form id="task-form">
                 <label for="taskId" hidden>Id:</label>

@@ -16,9 +16,22 @@ document.addEventListener("DOMContentLoaded", function () {
         Router.navigateTo('/tasks/create');
     });
     
-    document.getElementById('backToListBtn')?.addEventListener('click', () => {
+    document.getElementById('backToTaskListBtn')?.addEventListener('click', () => {
         Router.navigateTo('/tasks');
     });
+    
+    document.getElementById('backToGameListFromTaskBtn')?.addEventListener('click', () => {
+        Router.navigateTo('/');
+    });
+    
+    document.getElementById('createGameBtn')?.addEventListener('click', () => {
+        Router.navigateTo('/game/create');
+    });
+    
+    document.getElementById('backToGameListFromGameBtn')?.addEventListener('click', () => {
+        Router.navigateTo('/');
+    });
+    
     initializeGameForm();
     initializeTaskForm();
     displayAllGames();

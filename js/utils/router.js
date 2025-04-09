@@ -2,6 +2,7 @@
 class Router {
     static routes = {
       '/': 'home',
+      '/game/create': 'gameForm',
       '/tasks': 'taskList', 
       '/tasks/create': 'taskForm'
     };
