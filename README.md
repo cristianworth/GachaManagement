@@ -24,16 +24,18 @@ O **Gacha Management** é uma aplicação projetada para ajudar jogadores de **g
 ![Gacha Schedule](img/demo/gacha-schedule-demo-02.png)
 
 ## 🔧 Tecnologias Utilizadas
-- **HTML**, **CSS**, **JavaScript**
-- **Dexie.js** (IndexedDB Wrapper para armazenamento local)
-- **Node.js**
-- **Jest.js** e **Babel** (para suporte a ECMAScript Modules e testes automatizados)
+- HTML5, CSS3, JavaScript (ES6+)
+- Dexie.js (IndexedDB wrapper) v4.0.11
+- Modern JavaScript Modules (ESM)
+- Jest v29.7.0 (testing)
+- Babel (transpilation)
 
-## 🎯 Como Usar
-1. **Adicione seus jogos** ao sistema, informando o nome, abreviação e limite de stamina.
-2. **Registre sua resina atual** e veja em quanto tempo ela estará cheia.
-3. **Crie tarefas recorrentes** para acompanhar eventos importantes do jogo.
-4. O sistema **atualiza automaticamente** as tarefas com base no período definido.
+## 🎯 Features
+Add under Gacha Schedule:
+- Automatic task expiration handling
+- Configurable refresh cycles (daily, weekly, etc.)
+- Game-specific stamina calculations
+- Responsive form inputs with validation
 
 ## 📥 Instalação
 Para rodar o projeto localmente, siga os passos abaixo:

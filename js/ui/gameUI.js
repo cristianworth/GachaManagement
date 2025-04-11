@@ -2,7 +2,7 @@
 import { Game } from '../data/Game.js';
 import { fetchGameById, fetchAllGames, updateGame, addGame, deleteGameById } from '../database/gameDB.js';
 import { calculateMaxStaminaDate, formatDateToDayHour } from '../utils/dateUtils.js';
-import { clearFieldsFromGameForm } from './formHandler.js';
+import { resetGameForm } from './formHandler.js';
 import { getRandomColor } from '../utils/colorUtils.js';
 
 export async function displayAllGames() {
@@ -30,12 +30,13 @@ function createGameRow(game) {
         </td>
         <td>
             <input class="input-centered spacing-left" id="currentStamina${game.id}" type="number" value="${game.currentStamina | ''}" />
-            <button class="spacing-left" id="edit-game-${game.id}">Edit</button>
+            <button class="spacing-left" id="save-game-${game.id}">Save</button>
         </td>
         <td>
             <span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${game.maxStaminaAt}<\span>
         </td>
         <td>
+            <button class="spacing-left" id="edit-game-${game.id}">Edit</button>
             <button class="spacing-left" id="delete-game-${game.id}">Delete</button>
         </td>
     `;
@@ -44,17 +45,22 @@ function createGameRow(game) {
 }
 
 export function addGameEventListeners(game) {
+    const saveGame = document.getElementById(`save-game-${game.id}`);
     const editGame = document.getElementById(`edit-game-${game.id}`);
     const deleteGame = document.getElementById(`delete-game-${game.id}`);
 
-    if (editGame)
-        editGame.addEventListener("click", () => handleEditGame(game.id));
+    if (saveGame)
+        saveGame.addEventListener("click", () => handleGameSave(game.id));
+    
+    if (editGame)     
+        editGame.addEventListener("click", () => handleGameEdit(game.id))
     
     if (deleteGame)     
         deleteGame.addEventListener("click", () => handleDelete(game.id))
+    
 }
 
-async function handleEditGame(gameId) {
+async function handleGameSave(gameId) {
     let game = await fetchGameById(gameId);
 
     const currentStamina = parseInt(document.getElementById(`currentStamina${game.id}`).value, 10);
@@ -71,6 +77,10 @@ async function handleEditGame(gameId) {
     } else {
         alert("Please enter a valid number for stamina.");
     }
+}
+
+async function handleGameEdit(gameId) {
+    alert('not implemented yet ' + gameId);
 }
 
 async function handleDelete(gameId) {
@@ -95,5 +105,5 @@ export async function handleAddGame() {
 
     await addGame(newGame);
     displayAllGames();
-    clearFieldsFromGameForm();
+    resetGameForm();
 }

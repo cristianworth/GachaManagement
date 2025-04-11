@@ -1,18 +1,21 @@
 // js\ui\formHandler.js
 import { handleAddGame } from './gameUI.js';
 import { handleAddTask } from './taskUI.js';
+import Router from '../utils/router.js';
 
 export function initializeGameForm() {
     const gameForm = document.getElementById("game-form");
     gameForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         await handleAddGame();
+        Router.navigateTo('/');
     });
 
-    clearFieldsFromGameForm();
+    resetGameForm();
 }
 
-export function clearFieldsFromGameForm() {
+export function resetGameForm() {
+    document.getElementById("submitGameForm").textContent = "Create New Game";
     document.getElementById("gameDescription").value = '';
     document.getElementById("abbreviation").value = '';
     document.getElementById("capStamina").value = 240;
@@ -24,9 +27,10 @@ export function initializeTaskForm() {
     taskForm.addEventListener("submit", async function (e) {
         e.preventDefault();
         await handleAddTask();
+        Router.navigateTo('/tasks');
     })
 
-    clearFieldsFromTaskForm();
+    resetTaskForm();
 
     const hasDateSelector = document.getElementById("hasDateSelector");
 
@@ -35,8 +39,8 @@ export function initializeTaskForm() {
     }
 }
 
-export function clearFieldsFromTaskForm() {
-    document.getElementById("submitTaskForm").textContent = "Add Task";
+export function resetTaskForm() {
+    document.getElementById("submitTaskForm").textContent = "Create New Task";
     document.getElementById("taskId").value = '';
     document.getElementById("taskDescription").value = '';
     document.getElementById("expirationDay").value = 0;

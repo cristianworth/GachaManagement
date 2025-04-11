@@ -2,7 +2,7 @@
 import { Task } from '../data/Task.js';
 import { fetchAllTasks, completeTask, fetchTaskById, addTask, updateTask, deleteTaskById } from '../database/taskDB.js';
 import { formatDateForDisplay, formatDateForInput, getExpirationDate } from '../utils/dateUtils.js';
-import { clearFieldsFromTaskForm } from './formHandler.js'
+import { resetTaskForm } from './formHandler.js'
 import { setDateSelector } from './formHandler.js';
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js';
 
@@ -30,7 +30,7 @@ function createTaskRow(task) {
         </td>
         <td>${task.gameDescription}</td>
         <td>${task.description}</td>
-        <td>${RefreshTypeEnum.BuscaNomePorId(task.refreshType)}</td>
+        <td>${RefreshTypeEnum.findNameById(task.refreshType)}</td>
         <td>${formatDateForDisplay(task.expirationDate)}</td>
         <td>
             <button class="spacing-left" id="edit-task-${task.id}">Edit</button>
@@ -50,7 +50,7 @@ function addTaskEventListeners(task) {
         checkbox.addEventListener("change", () => handleTaskCompletion(task.id, checkbox.checked))
  
     if (editButton)
-        editButton.addEventListener("click", () => handleEditTask(task.id))
+        editButton.addEventListener("click", () => handleTaskEdit(task.id))
 
     if (deleteButton) 
         deleteButton.addEventListener("click", () => handleDelete(task.id))
@@ -61,7 +61,7 @@ async function handleTaskCompletion(taskId, value) {
     await displayAllTasks();
 }    
 
-async function handleEditTask (taskId) {
+async function handleTaskEdit (taskId) {
     const task = await fetchTaskById(taskId);
 
     if (task) {
@@ -125,6 +125,6 @@ export async function handleAddTask() {
     }
 
     displayAllTasks();
-    clearFieldsFromTaskForm();
+    resetTaskForm();
 }
 
