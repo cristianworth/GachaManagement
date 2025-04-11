@@ -15,6 +15,7 @@ export function initializeGameForm() {
 }
 
 export function resetGameForm() {
+    document.getElementById("submitGameForm").textContent = "Create New Game";
     document.getElementById("gameDescription").value = '';
     document.getElementById("abbreviation").value = '';
     document.getElementById("capStamina").value = 240;
@@ -39,7 +40,7 @@ export function initializeTaskForm() {
 }
 
 export function resetTaskForm() {
-    document.getElementById("submitTaskForm").textContent = "Add Task";
+    document.getElementById("submitTaskForm").textContent = "Create New Task";
     document.getElementById("taskId").value = '';
     document.getElementById("taskDescription").value = '';
     document.getElementById("expirationDay").value = 0;

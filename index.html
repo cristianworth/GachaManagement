@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -38,11 +39,11 @@
 
     <title>Gacha Management</title>
 </head>
-    
+
 <body>
-    <!-- Home Page (Games) -->
-    <div data-page="home">
-        <section id="game-section">
+    <!-- Games List Page -->
+    <div data-page="games">
+        <section>
             <h1 class="main-title">
                 <a href="https://cristianworth.github.io/GachaManagement/" target="_blank">Gacha Management</a>
                 <br>
@@ -50,6 +51,8 @@
             </h1>
 
             <button id="createGameBtn">Create New Game</button>
+            <button id="viewTasksBtn">View Tasks</button>
+            
             <table id="gameList">
                 <thead>
                     <tr>
@@ -64,16 +67,15 @@
                     <!-- Data will be populated automatically -->
                 </tbody>
             </table>
-            
-            <button id="viewTasksBtn">View Tasks</button>
         </section>
     </div>
 
-    <div data-page="gameForm" style="display: none;">
+    <!-- Create Game Page -->
+    <div data-page="createGame" style="display:none">
         <section>
             <h1 class="main-title">Create/Edit Game</h1>
-            <button id="backToGameListFromGameBtn">Back to Game List</button>
-
+            <button id="backToGamesBtn">Back to Games</button>
+            
             <form id="game-form">
                 <label for="gameDescription">Name of the game:</label>
                 <input id="gameDescription" type="text" required/>
@@ -87,16 +89,16 @@
                 <label for="staminaPerMinute">Stamina p/ Minute:</label>
                 <input id="staminaPerMinute" value="6" type="text" required/>
                 
-                <button type="submit">Add Game</button>
+                <button id="submitGameForm" type="submit">Save Game</button>
             </form>
         </section>
     </div>
 
     <!-- Task List Page -->
     <div data-page="taskList" style="display:none">
-        <section id="task-section">
-            <h1 class="main-title">Gacha Schedule</h1>
-            <button id="backToGameListFromTaskBtn">Back to Game List</button>
+        <section>
+            <h1 class="main-title">Task List</h1>
+            <button id="backToGamesFromTasksBtn">Back to Games</button>
             <button id="createTaskBtn">Create New Task</button>
             
             <table id="gameSchedule">
@@ -118,11 +120,11 @@
         </section>
     </div>
 
-    <!-- Task Form Page -->
-    <div data-page="taskForm" style="display:none">
+    <!-- Create Task Page -->
+    <div data-page="createTask" style="display:none">
         <section>
             <h1 class="main-title">Create/Edit Task</h1>
-            <button id="backToTaskListBtn">Back to Task List</button>
+            <button id="backToTasksBtn">Back to Tasks</button>
             
             <form id="task-form">
                 <label for="taskId" hidden>Id:</label>
