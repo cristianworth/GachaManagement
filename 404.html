@@ -1,0 +1,17 @@
+<!-- 404.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    const segments = window.location.pathname.split('/');
+    const repoName = segments[1];
+    const path = segments.slice(2).join('/') || '/';
+    window.location.href = `/${repoName}/#${path}`;
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>

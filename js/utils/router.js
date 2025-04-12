@@ -2,31 +2,28 @@
 import NavigationService from '../services/navigation.service.js';
 
 class Router {
+  static BASE_PATH = window.location.hostname.includes('github.io') ? '/GachaManagement' : '';
   static routes = {
     '/': 'games',
     '/games/create': 'createGame',
-    '/tasks': 'taskList', 
+    '/tasks': 'taskList',
     '/tasks/create': 'createTask'
   };
 
   static init() {
-    // Initialize navigation handlers
     NavigationService.init();
-    
-    // Setup history listeners
     window.addEventListener('popstate', () => this.route());
-    
-    // Initial route
     this.route();
   }
 
   static navigateTo(path) {
-    history.pushState({}, '', path);
+    const fullPath = `${this.BASE_PATH}${path}`;
+    history.pushState({}, '', fullPath);
     this.route();
   }
 
   static route() {
-    const path = window.location.pathname;
+    const path = this.getCurrentPath();
     const view = this.routes[path] || 'games';
     
     document.querySelectorAll('[data-page]').forEach(el => {
@@ -42,6 +39,13 @@ class Router {
         import('../ui/taskUI.js').then(module => module.displayAllTasks());
         break;
     }
+  }
+  
+  static getCurrentPath() {
+    const path = window.location.pathname;
+    return path.startsWith(this.BASE_PATH) 
+      ? path.slice(this.BASE_PATH.length) || '/'
+      : path;
   }
 }
 
