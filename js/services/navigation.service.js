@@ -9,33 +9,28 @@ class NavigationService {
   }
 
   static _bindGameNavigations() {
-    document.getElementById('viewTasksBtn')?.addEventListener('click', () => {
-      Router.navigateTo('/tasks');
-    });
-    
-    document.getElementById('createGameBtn')?.addEventListener('click', () => {
-      Router.navigateTo('/games/create');
-    });
+    this._bindNavigation('#viewTasksBtn', '/tasks');
+    this._bindNavigation('#createGameBtn', '/games/create');
   }
 
   static _bindTaskNavigations() {
-    document.getElementById('backToGamesFromTasksBtn')?.addEventListener('click', () => {
-      Router.navigateTo('/');
-    });
-    
-    document.getElementById('createTaskBtn')?.addEventListener('click', () => {
-      Router.navigateTo('/tasks/create');
-    });
+    this._bindNavigation('#backToGamesFromTasksBtn', '/');
+    this._bindNavigation('#createTaskBtn', '/tasks/create');
   }
 
   static _bindFormNavigations() {
-    document.getElementById('backToGamesBtn')?.addEventListener('click', () => {
-      Router.navigateTo('/');
-    });
-    
-    document.getElementById('backToTasksBtn')?.addEventListener('click', () => {
-      Router.navigateTo('/tasks');
-    });
+    this._bindNavigation('#backToGamesBtn', '/');
+    this._bindNavigation('#backToTasksBtn', '/tasks');
+  }
+
+  static _bindNavigation(selector, path) {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.addEventListener('click', (e) => {
+        e.preventDefault();
+        Router.navigateTo(path);
+      });
+    }
   }
 }
 
