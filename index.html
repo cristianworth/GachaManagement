@@ -65,10 +65,13 @@
     <!-- Create Game Page -->
     <div data-page="createGame" style="display:none">
         <section>
-            <h1 class="main-title">Create/Edit Game</h1>
+            <h1 id="game-form-title" class="main-title">Create/Edit Game</h1>
             <button id="backToGamesBtn">Back to Games</button>
             
             <form id="game-form">
+                <label for="gameId" hidden>Id:</label>
+                <input id="gameId" type="number" hidden>
+
                 <label for="gameDescription">Name of the game:</label>
                 <input id="gameDescription" type="text" required/>
                 
@@ -81,7 +84,7 @@
                 <label for="staminaPerMinute">Stamina p/ Minute:</label>
                 <input id="staminaPerMinute" value="6" type="text" required/>
                 
-                <button id="submitGameForm" type="submit">Save Game</button>
+                <button id="submitGameForm" type="submit">Save / Update</button>
             </form>
         </section>
     </div>
@@ -115,15 +118,15 @@
     <!-- Create Task Page -->
     <div data-page="createTask" style="display:none">
         <section>
-            <h1 class="main-title">Create/Edit Task</h1>
+            <h1 id="task-form-title" class="main-title">Create/Edit Task</h1>
             <button id="backToTasksBtn">Back to Tasks</button>
             
             <form id="task-form">
                 <label for="taskId" hidden>Id:</label>
                 <input id="taskId" type="number" hidden>
                 
-                <label for="gameId">Game:</label>
-                <select id="gameId"></select>
+                <label for="taskGameId">Game:</label>
+                <select id="taskGameId"></select>
                 
                 <label for="taskDescription">Task:</label>
                 <input id="taskDescription" type="text" required/>
@@ -147,7 +150,7 @@
                 <label for="refreshType">Refresh Type:</label>
                 <select id="refreshType"></select>
                 
-                <button id="submitTaskForm" type="submit">Save Task</button>
+                <button id="submitTaskForm" type="submit">Save / Update</button>
             </form>
         </section>
     </div>

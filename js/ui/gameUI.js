@@ -2,8 +2,9 @@
 import { Game } from '../data/Game.js';
 import { fetchGameById, fetchAllGames, updateGame, addGame, deleteGameById } from '../database/gameDB.js';
 import { calculateMaxStaminaDate, formatDateToDayHour } from '../utils/dateUtils.js';
-import { resetGameForm } from './formHandler.js';
+import { resetGameForm, setGameFormMessage } from './formHandler.js';
 import { getRandomColor } from '../utils/colorUtils.js';
+import Router from '../utils/router.js';
 
 export async function displayAllGames() {
     const games = await fetchAllGames();
@@ -80,7 +81,18 @@ async function handleGameSave(gameId) {
 }
 
 async function handleGameEdit(gameId) {
-    alert('not implemented yet ' + gameId);
+    Router.navigateTo('/games/create');
+
+    const game = await fetchGameById(gameId);
+    if (game) {
+        document.getElementById("gameId").value = game.id;
+        setGameFormMessage();
+        
+        document.getElementById("gameDescription").value = game.description;
+        document.getElementById("abbreviation").value = game.abbreviation;
+        document.getElementById("capStamina").value = game.capStamina;
+        document.getElementById("staminaPerMinute").value = game.staminaPerMinute;
+    }
 }
 
 async function handleDelete(gameId) {
@@ -94,16 +106,25 @@ export async function handleAddGame() {
     const capStamina = document.getElementById("capStamina").value;
     const staminaPerMinute = document.getElementById("staminaPerMinute").value;
 
-    const newGame = new Game(
+    const gameId = (document.getElementById("gameId").value) ? parseInt(document.getElementById("gameId").value) : undefined;
+    
+    const game = new Game(
         gameDescription, 
         abbreviation, 
         'img/default-icon.png',
         capStamina,
         staminaPerMinute,
-        getRandomColor()
+        getRandomColor(),
+        gameId
     );
 
-    await addGame(newGame);
+    debugger;
+    if (gameId) {
+        await updateGame(game);
+    } else {
+        await addGame(game);
+    }
+
     displayAllGames();
     resetGameForm();
 }

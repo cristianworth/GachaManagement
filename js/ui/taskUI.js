@@ -2,9 +2,9 @@
 import { Task } from '../data/Task.js';
 import { fetchAllTasks, completeTask, fetchTaskById, addTask, updateTask, deleteTaskById } from '../database/taskDB.js';
 import { formatDateForDisplay, formatDateForInput, getExpirationDate } from '../utils/dateUtils.js';
-import { resetTaskForm } from './formHandler.js'
-import { setDateSelector } from './formHandler.js';
+import { resetTaskForm, setDateSelector, setTaskFormMessage } from './formHandler.js'
 import RefreshTypeEnum from '../enums/RefreshTypeEnum.js';
+import Router from '../utils/router.js';
 
 export async function displayAllTasks() {
     const tasks = await fetchAllTasks();
@@ -62,16 +62,18 @@ async function handleTaskCompletion(taskId, value) {
 }    
 
 async function handleTaskEdit (taskId) {
-    const task = await fetchTaskById(taskId);
+    Router.navigateTo('/tasks/create');
 
+    const task = await fetchTaskById(taskId);
     if (task) {
-        document.getElementById("submitTaskForm").textContent = "Update Task";
         document.getElementById("taskId").value = task.id;
-        document.getElementById("gameId").value = task.gameId;
+        document.getElementById("taskGameId").value = task.gameId;
+        setTaskFormMessage();
 
         document.getElementById("taskDescription").value = task.description;
         document.getElementById("expirationDay").value = 0;
         document.getElementById("expirationHour").value = 0;
+
         setDateSelector(true);
         document.getElementById("expirationDate").value = formatDateForInput(task.expirationDate);
         document.getElementById("refreshType").value = task.refreshType;
@@ -84,7 +86,7 @@ async function handleDelete(taskId) {
 }
 
 export async function handleAddTask() {
-    const selectGame = document.getElementById("gameId");
+    const selectGame = document.getElementById("taskGameId");
     const gameId = parseInt(selectGame.value);
     const gameDescription = selectGame.options[selectGame.selectedIndex].text;
     const taskDescription = document.getElementById("taskDescription").value;
@@ -100,28 +102,22 @@ export async function handleAddTask() {
         expirationDate = getExpirationDate(expirationDay, expirationHour);
     }
 
-    const taskId = parseInt(document.getElementById("taskId").value);
+    const taskId = document.getElementById("taskId").value ? parseInt(document.getElementById("taskId").value) : undefined;
+
+    const task = new Task(
+        taskDescription,
+        expirationDate,
+        refreshType,
+        gameId,
+        gameDescription,
+        taskId,
+    );
+    
+    debugger;
     if (taskId) {
-        const updatedTask = new Task(
-            taskDescription,
-            expirationDate,
-            refreshType,
-            gameId,
-            gameDescription,
-            taskId,
-        );
-        
-        await updateTask(updatedTask);
+        await updateTask(task);
     } else {
-        const newTask = new Task(
-            taskDescription,
-            expirationDate,
-            refreshType,
-            gameId,
-            gameDescription,
-        );
-        
-        await addTask(newTask);
+        await addTask(task);
     }
 
     displayAllTasks();
