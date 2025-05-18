@@ -11,15 +11,35 @@ export function initializeGameForm() {
         Router.navigateTo('/');
     });
 
+    const createGameBtn = document.getElementById("createGameBtn");
+    if (createGameBtn) {
+        createGameBtn.addEventListener("click", () => handleCallGameFormButton());
+    }
+}
+
+function handleCallGameFormButton() {
+    Router.navigateTo('/games/create');
     resetGameForm();
 }
 
 export function resetGameForm() {
-    document.getElementById("submitGameForm").textContent = "Create New Game";
+    document.getElementById("gameId").value = '';
     document.getElementById("gameDescription").value = '';
     document.getElementById("abbreviation").value = '';
     document.getElementById("capStamina").value = 240;
     document.getElementById("staminaPerMinute").value = 6;
+    setGameFormMessage();
+}
+
+export function setGameFormMessage() {
+    const gameTask = document.getElementById("gameId").value;
+    if (gameTask) {
+        document.getElementById("submitGameForm").textContent = "Update";
+        document.getElementById("game-form-title").textContent = "Update Game";
+    } else {
+        document.getElementById("submitGameForm").textContent = "Save";
+        document.getElementById("game-form-title").textContent = "Create Game";
+    }
 }
 
 export function initializeTaskForm() {
@@ -30,28 +50,46 @@ export function initializeTaskForm() {
         Router.navigateTo('/tasks');
     })
 
-    resetTaskForm();
+    const createTaskBtn = document.getElementById("createTaskBtn");
+    if (createTaskBtn) {
+        createTaskBtn.addEventListener("click", () => handleCallTaskFormButton());
+    }
 
     const hasDateSelector = document.getElementById("hasDateSelector");
-
     if (hasDateSelector) {
         hasDateSelector.addEventListener("change", () => handleDateSelector(hasDateSelector.checked));
     }
 }
 
+function handleCallTaskFormButton() {
+    Router.navigateTo('/tasks/create');
+    resetTaskForm();
+}
+
 export function resetTaskForm() {
-    document.getElementById("submitTaskForm").textContent = "Create New Task";
     document.getElementById("taskId").value = '';
     document.getElementById("taskDescription").value = '';
     document.getElementById("expirationDay").value = 0;
     document.getElementById("expirationHour").value = 0;
     document.getElementById("expirationDate").value = '';
     setDateSelector(false);
+    setTaskFormMessage();
 }
 
 export function setDateSelector(hasDateSelector) {
     document.getElementById("hasDateSelector").checked = hasDateSelector;
     handleDateSelector(hasDateSelector);
+}
+
+export function setTaskFormMessage() {
+    const idTask = document.getElementById("taskId").value;
+    if (idTask) {
+        document.getElementById("submitTaskForm").textContent = "Update";
+        document.getElementById("task-form-title").textContent = "Update Task";
+    } else {
+        document.getElementById("submitTaskForm").textContent = "Save";
+        document.getElementById("task-form-title").textContent = "Create Task";
+    }
 }
 
 function handleDateSelector(hasDateSelector) {

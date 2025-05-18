@@ -10,12 +10,12 @@ class NavigationService {
 
   static _bindGameNavigations() {
     this._bindNavigation('#viewTasksBtn', '/tasks');
-    this._bindNavigation('#createGameBtn', '/games/create');
+    // this._bindNavigation('#createGameBtn', '/games/create'); changed to --> js\ui\formHandler.js
   }
 
   static _bindTaskNavigations() {
     this._bindNavigation('#backToGamesFromTasksBtn', '/');
-    this._bindNavigation('#createTaskBtn', '/tasks/create');
+    // this._bindNavigation('#createTaskBtn', '/tasks/create'); changed to --> js\ui\formHandler.js
   }
 
   static _bindFormNavigations() {
