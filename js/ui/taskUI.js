@@ -113,7 +113,6 @@ export async function handleAddTask() {
         taskId,
     );
     
-    debugger;
     if (taskId) {
         await updateTask(task);
     } else {
