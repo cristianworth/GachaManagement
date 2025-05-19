@@ -20,6 +20,7 @@ export async function displayAllGames() {
 
 function createGameRow(game) {
     let row = document.createElement("tr");
+    const maxStaminaAt = formatDateToDayHour(game.dateMaxStamina);
 
     row.innerHTML = `
         <td>
@@ -34,7 +35,7 @@ function createGameRow(game) {
             <button class="spacing-left" id="save-game-${game.id}">Save</button>
         </td>
         <td>
-            <span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${game.maxStaminaAt}<\span>
+            <span id="newMaxStaminaAt${game.id}" class="spacing-left red-text">${maxStaminaAt}<\span>
         </td>
         <td>
             <button class="spacing-left" id="edit-game-${game.id}">Edit</button>
@@ -118,7 +119,6 @@ export async function handleAddGame() {
         gameId
     );
 
-    debugger;
     if (gameId) {
         await updateGame(game);
     } else {

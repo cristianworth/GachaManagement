@@ -1,10 +1,14 @@
  // js\utils\dateUtils.js
- export function formatDateToDayHour(currentDate) {
-    let day = currentDate.getDate();
-    let hour = currentDate.getHours();
-    let minutes = currentDate.getMinutes();
+ export function formatDateToDayHour(date) {
+    const today = new Date();
+    const diffMs = date - today;
+    const diffHours = Math.ceil(diffMs / (1000 * 60 * 60)); // milissegundos para horas
 
-    return `Day ${day} at ${hour}:${minutes < 10 ? '0' + minutes : minutes}`;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+
+    return `Day ${day} at ${hour}:${minutes < 10 ? '0' + minutes : minutes}  (${diffHours}h left)`;
 }
 
 export function calculateMaxStaminaDate(game) {
